@@ -44,7 +44,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser',
     ],
+<<<<<<< HEAD
     'PAGE_SIZE': 1
+=======
+    # 'PAGE_SIZE': 10
+>>>>>>> 95fd0ef0dff3f92be117f777f9cf164515ec7af6
 }
 
 MIDDLEWARE = [
@@ -85,11 +89,19 @@ WSGI_APPLICATION = 'DnsObject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
+<<<<<<< HEAD
         'NAME': 'cdntest',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST':'localhost',
         'PORT':'3306'
+=======
+        'NAME': 'testdb',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST': 'localhost',
+        'PORT': '3306'
+>>>>>>> 95fd0ef0dff3f92be117f777f9cf164515ec7af6
     }
 }
 # DATABASES = {
@@ -123,7 +135,11 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'zh-hans'
 
+<<<<<<< HEAD
 TIME_ZONE = 'UTC'
+=======
+TIME_ZONE = 'Asia/Shanghai'
+>>>>>>> 95fd0ef0dff3f92be117f777f9cf164515ec7af6
 
 USE_I18N = True
 

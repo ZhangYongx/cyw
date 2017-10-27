@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 """DnsObject URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
@@ -15,9 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.conf.urls import url,include
+=======
+# -*- coding: utf-8 -*-
+from django.conf.urls import url,include
+from rest_framework.documentation import include_docs_urls
+from django.contrib import admin
+>>>>>>> 95fd0ef0dff3f92be117f777f9cf164515ec7af6
 
 
 urlpatterns = [
 url(r'^api/', include("dns.urls")),
 url(r'^admin/', admin.site.urls),
+<<<<<<< HEAD
+=======
+url(r'^docs/', include_docs_urls(title='DNS管理系统')),
+>>>>>>> 95fd0ef0dff3f92be117f777f9cf164515ec7af6
 ]
