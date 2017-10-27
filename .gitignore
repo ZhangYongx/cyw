@@ -17,11 +17,14 @@ Icon
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
-
+.pyc
+.sqlite3
+.idea
+__init__.py
 # Directories potentially created on remote AFP share
 .AppleDB
 .AppleDesktop
 Network Trash Folder
 Temporary Items
 .apdisk
-
+.idea
