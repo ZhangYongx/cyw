@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for DnsObject project.
 
@@ -25,7 +26,7 @@ SECRET_KEY = '9$w^(3(6!!p@077ol38s#x*!8%%@o8=kq0a4#*qp6a_(s5apan'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*',]
 
 
 # Application definition
@@ -39,11 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'dns',
+    'rest_framework.authtoken',
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser',
     ],
+        'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend',)
     # 'PAGE_SIZE': 10
 }
 
@@ -85,7 +88,7 @@ WSGI_APPLICATION = 'DnsObject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'testdb',
+        'NAME': 'dnstest',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
@@ -121,7 +124,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'zh-hans'
+LANGUAGE_CODE = 'zh-hans'  #中文支持，django1.8以后支持；1.8以前是zh-cn
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -129,7 +132,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False  #默认是Ture，时间是utc时间，由于我们要用本地时间，所以手动修改为false！
 
 
 # Static files (CSS, JavaScript, Images)

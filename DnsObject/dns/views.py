@@ -3,79 +3,46 @@ from __future__ import unicode_literals
 from dns import models
 from dns import serializers
 from rest_framework import viewsets
-from dns import permissions
-from rest_framework import mixins
 from rest_framework.response import Response
 from dns.ipreplace import IpReplace
 
 
-class AddressViewsSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.ListModelMixin,
-                      mixins.DestroyModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class AddressViewsSet(viewsets.ModelViewSet):
+
+    """
+        list:
+            域名解析相关信息
+    """
     queryset = models.Address.objects.all()
-
-    def get_serializer_class(self):
-        if self.action == "retrieve":
-            return serializers.AddressSerializer
-        elif self.action == "create":
-            return serializers.AddressSerializerDetail
-        elif self.action == "update":
-            return serializers.AddressSerializerDetail
-        elif self.action == "partial_update":
-            return serializers.AddressSerializerDetail
-        # elif self.action == "list":
-        #     return serializers.AddressSerializerDetail
-        return serializers.AddressSerializerDetail
-
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.ip = IP(serializer.ip).strBin()
-    #     serializer.is_valid(raise_exception=True)
-    #     user = self.perform_create(serializer)
-    #     headers = self.get_success_headers(serializer.data)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
-
-    # def update(self, request, *args, **kwargs):
-    #     partial = kwargs.pop('partial', False)
-    #     instance = self.get_object()
-    #     instance.ip = IP(instance.ip).strBin()
-    #     instance.save()
-    #     serializer = self.get_serializer(instance, data=request.data, partial=partial)
-    #     serializer.is_valid(raise_exception=True)
-    #     self.perform_update(serializer)
-    #
-    #     if getattr(instance, '_prefetched_objects_cache', None):
-    #         # If 'prefetch_related' has been applied to a queryset, we need to
-    #         # forcibly invalidate the prefetch cache on the instance.
-    #         instance._prefetched_objects_cache = {}
-    #
-    #     return Response(serializer.data)
-    #
-    # def perform_update(self, serializer):
-    #     serializer.save()
+    serializer_class = serializers.AddressSerializer
 
     def retrieve(self, request, *args, **kwargs):
+        """
+            根据IP获取域名解析相关信息，并将二进制数转换为点分十进制
+        """
         instance = self.get_object()
         instance.ip = IpReplace(instance.ip).bintoip()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
-    # def list(self, request, *args, **kwargs):
-    #     instance = self.get_object()
-    #     instance.ip = IpReplace(instance.ip).bintoip()
-    #     serializer = self.get_serializer(instance)
-    #     queryset = self.filter_queryset(serializer)
-    #
-    #     page = self.paginate_queryset(queryset)
-    #     if page is not None:
-    #         serializer = self.get_serializer(page, many=True)
-    #         return self.get_paginated_response(serializer.data)
-    #     serializer = self.get_serializer(queryset, many=True)
-    #     return Response(serializer.data)
+    def get_queryset(self):
+
+        """
+            根据区域id查询，获取相关数据，并将IP由二进制转换为点分十进制
+        """
+        queryset = models.Address.objects.all()
+        areaid = self.request.query_params.get('areaid', None)
+        if areaid is not None:
+            queryset = queryset.filter(area_id=areaid)
+        for i in queryset:
+            i.ip = IpReplace(i.ip).bintoip()
+        return queryset
+
 
 class AliasViewSet(viewsets.ModelViewSet):
     queryset = models.Alias.objects.all()
     serializer_class = serializers.AliasSerializer
-    # permission_classes = (permissions.IsOwnerOrReadOnly,)
+    # permission_classes = (permissions.IsOwnerOrReadOnly,) 权限(非创建者仅有只读权限)
 
 
 class AreaViewsSetDetail(viewsets.ModelViewSet):
