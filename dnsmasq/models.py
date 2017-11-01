@@ -9,7 +9,7 @@ class Area(models.Model):
     """
     Area Table
     """
-    areaname = models.CharField(db_column='areaName', max_length=45, blank=True, verbose_name="区域名")
+    areaname = models.CharField(max_length=45, blank=False, verbose_name="区域名")
     responsible = models.CharField(max_length=45, blank=True, verbose_name="负责人")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
 
@@ -26,7 +26,7 @@ class Alias(models.Model):
     Alias Table
     """
     # aliasId = models.IntegerField()
-    aliasForeign = models.ForeignKey('Area', verbose_name="Area外键")
+    aliasArea = models.ForeignKey('Area', verbose_name="区域")
     # 原始IP 与 IP段只能填写一个
     oldip = models.GenericIPAddressField(verbose_name="原IP")
     startipEndip = models.CharField(max_length=200, blank=True, verbose_name="IP段")
@@ -41,13 +41,16 @@ class Alias(models.Model):
         # managed = True
         db_table = 'alias'
 
+    def __str__(self):
+        return str(self.newip)
+
 
 class Cname(models.Model):
     """
     Cname Table
     """
     # cnameId = models.IntegerField()
-    cnameForeign = models.ForeignKey('Area', verbose_name="Area外键")
+    cnameArea = models.ForeignKey('Area', verbose_name="区域")
     #此处需检测域名的规范性
     cn = models.CharField(max_length=100, verbose_name="别名", unique=True)
     dns = models.CharField(max_length=100, verbose_name="原域名")
@@ -61,3 +64,6 @@ class Cname(models.Model):
     class Meta:
         # managed = True
         db_table = 'cname'
+
+    def __str__(self):
+        return self.cn
