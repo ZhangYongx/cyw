@@ -1,5 +1,4 @@
 # ---> macOS
-<<<<<<< HEAD
 .DS_Store
 .AppleDouble
 .LSOverride
@@ -25,7 +24,6 @@ Icon
 ._*
 
 # Files that might appear in the root of a volume
->>>>>>> 95fd0ef0dff3f92be117f777f9cf164515ec7af6
 .DocumentRevisions-V100
 .fseventsd
 .Spotlight-V100
@@ -35,7 +33,6 @@ Icon
 .pyc
 .sqlite3
 .idea
-<<<<<<< HEAD
 __init__.py
 # Directories potentially created on remote AFP share
 .AppleDB
@@ -51,5 +48,5 @@ __init__.py
 Network Trash Folder
 Temporary Items
 .apdisk
->>>>>>> 95fd0ef0dff3f92be117f777f9cf164515ec7af6
+
 
