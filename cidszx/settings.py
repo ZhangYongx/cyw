@@ -76,9 +76,6 @@ TEMPLATES = [
     },
 ]
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    'django.template.context_processors.request',
-)
 
 WSGI_APPLICATION = 'cidszx.wsgi.application'
 
