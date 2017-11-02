@@ -12,7 +12,7 @@ class ComOjbect(models.Model):
     currentime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     uptime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     currentuser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    upuser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
+    upuser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
 
 
@@ -37,14 +37,14 @@ class Area(models.Model):
     """
     Area Table
     """
-    name = models.CharField(max_length=10, verbose_name="区域简称")
+    name = models.CharField(max_length=10, unique=True, verbose_name="区域简称", help_text="请填写区域的英文缩写")
     fullname = models.CharField(max_length=45, blank=False, verbose_name="区域名")
-    responsible = models.CharField(max_length=45, blank=True, verbose_name="负责人")
+    responsible = models.ForeignKey("UserTable",verbose_name="负责人")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
-    createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
+    createUser = models.CharField(default='now user', editable=False, max_length=30, verbose_name="创建用户")
+    updateUser = models.CharField(default='now user', max_length=30, editable=False, verbose_name="更新用户")
 
     class Meta:
         # managed = True
@@ -58,20 +58,20 @@ class Agent(models.Model):
     """
     Agent Table
     """
-    liveStates = (('r', "running"),
-                  ('d', "down"),
-                  ('p', "pause"),
-                  ('u', "unknown"),
+    liveStates = ((0, "running"),
+                  (1, "down"),
+                  (2, "pause"),
+                  (3, "unknown"),
                   )
     agtIP = models.GenericIPAddressField(verbose_name="代理IP")
-    agtVersion = models.IntegerField(verbose_name="版本")
+    agtVersion = models.IntegerField(default=1, verbose_name="版本")
     agtStates = models.IntegerField(choices=liveStates, verbose_name="运行状态")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
-    createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    createUser = models.CharField(default='now user', editable=False, max_length=30, verbose_name="创建用户")
+    updateUser = models.CharField(default='now user', max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         db_table = 'agent'
@@ -90,8 +90,8 @@ class Local(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         db_table = "local"
@@ -112,8 +112,8 @@ class Server(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         db_table = "server"
@@ -132,8 +132,8 @@ class Address(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -154,8 +154,8 @@ class HostRecord(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -175,8 +175,8 @@ class Ptr(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -198,9 +198,9 @@ class Srv(models.Model):
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
-    createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    createUser = models.CharField(default='now user', editable=False, max_length=30, verbose_name="创建用户")
+    updateUser = models.CharField(default='now user', max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -215,14 +215,14 @@ class Mx(models.Model):
     mail server table
     """
     domain = models.CharField(max_length=45, verbose_name="域名")
-    mxDomain = models.CharField(max_length=45, verbose_name="服务地址")
+    mxDomain = models.EmailField(verbose_name="服务地址")
     weight = models.IntegerField(default=10, verbose_name="权重")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -242,8 +242,8 @@ class Txt(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -261,8 +261,8 @@ class Cname(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -285,8 +285,8 @@ class Alias(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -303,8 +303,8 @@ class Resolv(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -324,8 +324,8 @@ class MachineRoom(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area = models.ForeignKey('Area', verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         # managed = True
@@ -344,8 +344,8 @@ class IP(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
-    area =  models.ForeignKey("Area", verbose_name="区域")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
+    area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
 
     class Meta:
         db_table = "ip"
@@ -360,7 +360,7 @@ class Domain(models.Model):
     createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user',max_length=30, verbose_name="更新用户")
+    updateUser = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
 
     class Meta:
         db_table = "domain"
