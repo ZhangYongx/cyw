@@ -2,8 +2,6 @@
 from django.conf.urls import url,include
 from dns import views
 from rest_framework.routers import DefaultRouter
-from dns import viewtest
-
 
 router = DefaultRouter()
 router.register(r'address', views.AddressViewsSet, base_name='address')
@@ -17,12 +15,9 @@ router.register(r'ptr', views.PtrViewsSet, base_name='ptr')
 router.register(r'server', views.ServerViewsSet, base_name='server')
 router.register(r'srv', views.SrvViewsSet, base_name='srv')
 router.register(r'txt', views.TxtViewsSet, base_name='txt')
-# router.register(r'addressbyarea', views.AddressByAreaViewSet)
-
 
 urlpatterns = [
-    # url(r'^add/(\d+)/(\d+)/$', viewtest.old_add2_redirect),
-    # url(r'^new_add/(\d+)/(\d+)/$', viewtest.add2, name='nadd'),
+
     url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

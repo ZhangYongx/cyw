@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
 from dns import models
-from IPy import IP
-from rest_framework.utils import model_meta
-import time
 
 
 class AliasSerializer(serializers.ModelSerializer):
@@ -36,49 +33,27 @@ class AddressSerializer(serializers.ModelSerializer):
     """
     #外键关联
     area_id = serializers.StringRelatedField(source='area.id')
+    create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
+    update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
 
     class Meta:
         model = models.Address
         fields = (
             '__all__'
         )
-
-    def create(self, validated_data):
-        """
-            存储数据时，将点分十进制IP转换为二进制存储
-       """
-        try:
-            address = super(AddressSerializer, self).create(validated_data=validated_data)
-            address.ip = IP(address.ip).strBin()
-            # address.create_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-            address.save()
-            return address
-        except validated_data as e:
-            print "数据格式错误"
-
-    def update(self, instance, validated_data):
-        """
-            根据id更新信息
-        """
-        info = model_meta.get_field_info(instance)
-        for attr, value in validated_data.items():
-            if attr in info.relations and info.relations[attr].to_many:
-                field = getattr(instance, attr)
-                field.set(value)
-            else:
-                setattr(instance, attr, value)
-        instance.ip = IP(instance.ip).strBin()
-        instance.update_time = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(time.time()))
-        instance.save()
-        return instance
+        read_only_fields = ('create_user', 'update_user',)
 
 
 class CnameSerializer(serializers.ModelSerializer):
+    create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
+    update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
+
     class Meta:
         model = models.Cname
         fields = (
             "__all__"
         )
+        read_only_fields = ('create_user', 'update_user',)
 
 
 class HostSerializer(serializers.ModelSerializer):
@@ -145,3 +120,9 @@ class AddressSerializer2(serializers.ModelSerializer):
         )
 
 
+# class UserSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = models.User
+#         fields = (
+#             "__all__"
+#         )

@@ -5,6 +5,7 @@ from dns import serializers
 from rest_framework import viewsets
 from rest_framework.response import Response
 from dns.ipreplace import IpReplace
+from IPy import IP
 
 
 class AddressViewsSet(viewsets.ModelViewSet):
@@ -12,13 +13,45 @@ class AddressViewsSet(viewsets.ModelViewSet):
     """
         list:
             域名解析相关信息
+        retrieve:
+            查询某条信息
+        create:
+            添加信息
+        update:
+            修改信息
+        get_queryset：
+            查询某个区域的相关信息
     """
-    queryset = models.Address.objects.all()
     serializer_class = serializers.AddressSerializer
+
+    def create(self, request, *args, **kwargs):
+        """
+            添加信息，创建者和修改者默认为当前用户。IP转换为二进制存储
+         """
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.validated_data['create_user'] = self.request.user.username
+            serializer.validated_data['update_user'] = self.request.user.username
+            serializer.validated_data['ip'] = IP(serializer.validated_data['ip']).strBin()
+            self.perform_create(serializer)
+            return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        """
+            修改信息，修改人默认为当前用户，如果IP有修改，将转换为二进制存储。
+        """
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['ip'] = IP(serializer.validated_data['ip']).strBin()
+        serializer.validated_data['update_user'] = self.request.user.username
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
         """
-            根据IP获取域名解析相关信息，并将二进制数转换为点分十进制
+            根据Id获取域名解析相关信息，并将二进制IP转换为点分十进制
         """
         instance = self.get_object()
         instance.ip = IpReplace(instance.ip).bintoip()
@@ -53,6 +86,29 @@ class AreaViewsSetDetail(viewsets.ModelViewSet):
 class CnameViewsSet(viewsets.ModelViewSet):
     queryset = models.Cname.objects.all()
     serializer_class = serializers.CnameSerializer
+
+    def create(self, request, *args, **kwargs):
+        """
+            添加信息，创建者和修改者默认为当前用户。IP转换为二进制存储
+         """
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            serializer.validated_data['create_user'] = self.request.user.username
+            serializer.validated_data['update_user'] = self.request.user.username
+            self.perform_create(serializer)
+            return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        """
+            修改信息，修改人默认为当前用户，如果IP有修改，将转换为二进制存储。
+        """
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['update_user'] = self.request.user.username
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 
 class HostViewsSet(viewsets.ModelViewSet):
@@ -89,3 +145,7 @@ class TxtViewsSet(viewsets.ModelViewSet):
     queryset = models.Txt.objects.all()
     serializer_class = serializers.TxtSerializer
 
+
+# class UserViewSet(viewsets.ModelViewSet):
+#     queryset = models.User.objects.all()
+#     serializer_class = serializers.UserSerializer
