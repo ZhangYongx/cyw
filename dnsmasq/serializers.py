@@ -30,6 +30,7 @@ class AgentSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Agent
     """
+
     class Meta:
         model = Agent
         fields = (
