@@ -25,6 +25,8 @@ class UserTable(models.Model):
     userPasswd = models.CharField(blank=False, null=False, max_length=30, verbose_name="密码")
     createUser = models.CharField(default='now user',editable=False, max_length=30, verbose_name="创建用户")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
+    createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
 
     class Meta:
         db_table = 'usertable'
@@ -72,6 +74,7 @@ class Agent(models.Model):
     createUser = models.CharField(default='now user', editable=False, max_length=30, verbose_name="创建用户")
     updateUser = models.CharField(default='now user', max_length=30, editable=False, verbose_name="更新用户")
     area = models.ForeignKey('Area', to_field='name', verbose_name="区域")
+    # area = models.ForeignKey('Area', verbose_name="区域")
 
     class Meta:
         db_table = 'agent'

@@ -8,6 +8,8 @@ from . import views
 
 # 配置路由
 router = routers.DefaultRouter()
+
+
 router.register(r'UserTable', views.UserTableViewset)
 router.register(r'Area', views.AreaViewset)
 router.register(r'Agent', views.AgentViewset)

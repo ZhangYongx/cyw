@@ -5,11 +5,21 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 # Create your views here.
-# from django.db import models
+import re
+from django.core.exceptions import ValidationError
 from rest_framework import viewsets
 from django.db import models
 from .models import *
 from .serializers import *
+
+
+def validate_dnsname(data):
+    reg = re.compile(r'[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?',re.IGNORECASE)
+    is_dnsname = reg.match(data)
+    if is_dnsname:
+        return True
+    else:
+        raise ValidationError(u'请输入正确的域名格式')
 
 
 class UserTableViewset(viewsets.ModelViewSet):
