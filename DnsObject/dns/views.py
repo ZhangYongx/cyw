@@ -89,7 +89,7 @@ class CnameViewsSet(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """
-            添加信息，创建者和修改者默认为当前用户。IP转换为二进制存储
+            添加信息，创建者和修改者默认为当前用户
          """
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -100,7 +100,7 @@ class CnameViewsSet(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         """
-            修改信息，修改人默认为当前用户，如果IP有修改，将转换为二进制存储。
+            修改信息，修改人默认为当前用户
         """
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
