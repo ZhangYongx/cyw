@@ -12,10 +12,12 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-
+import sys
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
+sys.path.insert(0, BASE_DIR)
+sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
+# sys.path.insert(0, os.path.join(BASE_DIR, 'apps/PublicMethod'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
@@ -39,7 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'dns',
+    'address',
+    'area',
+    'users',
     'rest_framework.authtoken'
 ]
 REST_FRAMEWORK = {
@@ -62,6 +66,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'DnsObject.urls'
+
+AUTH_USER_MODEL = 'users.UserProfile'
 
 TEMPLATES = [
     {
@@ -89,11 +95,12 @@ WSGI_APPLICATION = 'DnsObject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dnstest',
+        'NAME': 'dnsdb',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
-        'PORT': '3306'
+        'PORT': '3306',
+        'OPTIONS': {'init_command': 'SET storage_engine=INNODB;'}
     }
 }
 # DATABASES = {
@@ -135,6 +142,8 @@ USE_L10N = True
 
 USE_TZ = False  #默认是Ture，时间是utc时间，由于我们要用本地时间，所以手动修改为false！
 
+#手机号码正则表达式
+REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
