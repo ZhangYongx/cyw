@@ -7,6 +7,10 @@ from rest_framework.response import Response
 from PublicMethod.ipreplace import IpReplace
 from address import models
 from address import serializers
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.authentication import SessionAuthentication
+from utils.permissions import IsOwnerOrReadOnly
 
 
 class AddressViewsSet(viewsets.ModelViewSet):
@@ -23,6 +27,9 @@ class AddressViewsSet(viewsets.ModelViewSet):
         get_queryset：
             查询某个区域的相关信息
     """
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+
     serializer_class = serializers.AddressSerializer
 
     def create(self, request, *args, **kwargs):
