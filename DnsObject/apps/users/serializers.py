@@ -24,6 +24,17 @@ class UserDetailSerializer(serializers.ModelSerializer):
         read_only_fields = ('create_user', 'update_user',)
 
 
+class UserPersonalSerializer(serializers.ModelSerializer):
+    """
+           用户基本信息serializers
+    """
+    update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
+
+    class Meta:
+        model = User
+        fields = ("id", "name", "mobile", "qq", "email", "update_time")
+
+
 class UserRegSerializer(serializers.ModelSerializer):
     """
         用户注册serializers

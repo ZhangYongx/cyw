@@ -45,12 +45,16 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
     queryset = models.DnsUserProfile.objects.all()
     authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
 
-    #根据不同请求，匹配对应的serializer
+    # 根据不同请求和权限，返回对应的信息
     def get_serializer_class(self):
         if self.action == "retrieve":
-            return serializers.UserDetailSerializer
+            if self.request.user.is_staff:
+                return serializers.UserDetailSerializer
+            return serializers.UserPersonalSerializer
         if self.action == "update":
-            return serializers.UserDetailSerializer
+            if self.request.user.is_staff:
+                return serializers.UserDetailSerializer
+            return serializers.UserPersonalSerializer
         elif self.action == "create":
             return serializers.UserRegSerializer
 
@@ -81,11 +85,6 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
         re_dict["name"] = user.name if user.name else user.username
         headers = self.get_success_headers(serializer.data)
         return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
-
-    # def update(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     serializer.is_valid(raise_exception=True)
-    #     user = self.perform_create(serializer)
 
     def get_object(self):
         """
