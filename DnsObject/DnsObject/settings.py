@@ -13,25 +13,18 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 
 import os
 import sys
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # sys.path.insert(0, os.path.join(BASE_DIR, 'apps/PublicMethod'))
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '9$w^(3(6!!p@077ol38s#x*!8%%@o8=kq0a4#*qp6a_(s5apan'
 
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['*',]
 
-AUTH_USER_MODEL = 'users.UserProfile'
-# Application definition
+AUTH_USER_MODEL = 'users.DnsUserProfile'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -41,9 +34,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'address',
-    'area',
-    'users',
+    'address.apps.AddressConfig',
+    'area.apps.AreaConfig',
+    'users.apps.UsersConfig',
+    'cname.apps.CnameConfig',
+    'seconddomain.apps.SeconddomainConfig',
     'rest_framework.authtoken'
 ]
 
@@ -64,6 +59,7 @@ AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
 
+#模板文件
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -84,9 +80,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'DnsObject.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.11/ref/settings/#databases
-
+#数据库配置
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -99,6 +93,7 @@ DATABASES = {
     }
 }
 
+#validators密码认证
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -114,6 +109,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#时区、语言设置
 LANGUAGE_CODE = 'zh-hans'  #中文支持，django1.8以后支持；1.8以前是zh-cn
 
 TIME_ZONE = 'Asia/Shanghai'
@@ -124,6 +120,7 @@ USE_L10N = True
 
 USE_TZ = False  #默认是Ture，时间是utc时间，由于我们要用本地时间，所以手动修改为false！
 
+#引入REST_FRAMEWORK
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
@@ -135,6 +132,7 @@ REST_FRAMEWORK = {
     ),
 }
 
+#JWT认证，token过期时间
 import datetime
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
@@ -143,8 +141,5 @@ JWT_AUTH = {
 
 #手机号码正则表达式
 REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'

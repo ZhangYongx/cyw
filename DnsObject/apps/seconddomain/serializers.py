@@ -1,16 +1,17 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
-from area import models
-from users.models import DnsUserProfile
+from seconddomain.models import SecondDomain
 
 
-class AreaSerializer(serializers.ModelSerializer):
+class SecondDomainSerializer(serializers.ModelSerializer):
     create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
 
     class Meta:
-        model = models.Area
+        model = SecondDomain
         fields = (
             '__all__'
         )
         read_only_fields = ('create_user', 'update_user',)
+
+

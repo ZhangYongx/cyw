@@ -40,7 +40,7 @@ class AddressViewsSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.validated_data['create_user'] = self.request.user.username
             serializer.validated_data['update_user'] = self.request.user.username
-            serializer.validated_data['ip'] = IP(serializer.validated_data['ip']).strBin()
+            serializer.validated_data['addr_ip'] = IP(serializer.validated_data['addr_ip']).strBin()
             self.perform_create(serializer)
             return Response(serializer.data)
 
@@ -52,7 +52,7 @@ class AddressViewsSet(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
-        serializer.validated_data['ip'] = IP(serializer.validated_data['ip']).strBin()
+        serializer.validated_data['addr_ip'] = IP(serializer.validated_data['addr_ip']).strBin()
         serializer.validated_data['update_user'] = self.request.user.username
         self.perform_update(serializer)
         return Response(serializer.data)
