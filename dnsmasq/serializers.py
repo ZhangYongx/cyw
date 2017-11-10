@@ -8,8 +8,8 @@ class DNSUserSerializer(serializers.ModelSerializer):
     """
     序列化 Models.UserTable
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = DNSUser
@@ -22,8 +22,8 @@ class AreaSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Area
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Area
@@ -36,8 +36,8 @@ class AgentSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Agent
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     # # 实现 create() 方法
     # def create(self, validated_data):
@@ -62,8 +62,8 @@ class LocalSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Local
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Local
@@ -76,8 +76,8 @@ class ServerSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Server
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Server
@@ -90,8 +90,8 @@ class AddressSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Address
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     addressIP = serializers.IPAddressField()
 
     class Meta:
@@ -105,8 +105,8 @@ class HostSerializer(serializers.ModelSerializer):
     """
     序列化 Models.HostRecord
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Host
@@ -119,8 +119,8 @@ class PtrSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Ptr
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Ptr
@@ -133,8 +133,8 @@ class SrvSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Srv
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Srv
@@ -147,8 +147,8 @@ class MxSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Mx
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Mx
@@ -161,8 +161,8 @@ class TxtSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Txt
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Txt
@@ -175,8 +175,8 @@ class CnameSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Cname
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Cname
@@ -189,8 +189,8 @@ class AliasSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Alias
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Alias
@@ -203,8 +203,8 @@ class ResolvSerializer(serializers.ModelSerializer):
     """
     Serializer Models.Resolv
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = Resolv
@@ -217,8 +217,8 @@ class IPinfoSerializer(serializers.ModelSerializer):
     """
     Serializer Models.IP
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = IPinfo
@@ -231,8 +231,8 @@ class TopDomainSerializer(serializers.ModelSerializer):
     """
     Serializer Models.Domain
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = TopDomain
@@ -245,8 +245,8 @@ class SecondDomainSerializer(serializers.ModelSerializer):
     """
     Serializer Models.Domain
     """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = SecondDomain

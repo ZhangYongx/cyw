@@ -21,9 +21,9 @@ class DNSUser(models.Model):
     User Table
     """
     permission_choice = (
-        (0, "超级管理员"),
+        (0, "普通用户"),
         (1, "管理员"),
-        (2, "普通用户"),
+        (2, "超级管理员"),
     )
 
     username = models.CharField(max_length=30, blank=False, null=False, unique=True, verbose_name="用户名")
@@ -31,7 +31,7 @@ class DNSUser(models.Model):
     email = models.EmailField(max_length=30, blank=False, null=False, verbose_name="邮箱地址")
     qq = models.CharField(max_length=11, null=False, verbose_name="QQ号")
     phone = models.CharField(max_length=11, null=False, verbose_name="手机号")
-    current_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     update_user = models.CharField(default='now user',max_length=30, editable=False, verbose_name="更新用户")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
@@ -80,10 +80,10 @@ class Agent(models.Model):
     agt_version = models.IntegerField(default=1, verbose_name="版本")
     agt_states = models.IntegerField(choices=live_states, default=1, verbose_name="运行状态")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
-    createTime = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
-    upTime = models.DateTimeField(auto_now=True, verbose_name="更新时间")
-    createUser = models.CharField(default='now user', editable=False, max_length=30, verbose_name="创建用户")
-    updateUser = models.CharField(default='now user', max_length=30, editable=False, verbose_name="更新用户")
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
+    create_user = models.CharField(default='now user', editable=False, max_length=30, verbose_name="创建用户")
+    update_user = models.CharField(default='now user', max_length=30, editable=False, verbose_name="更新用户")
     area_name = models.ForeignKey(Area, to_field='name', verbose_name="区域")
 
     class Meta:
@@ -161,6 +161,7 @@ class Host(models.Model):
 
     class Meta:
         # managed = True
+        unique_together = ('host_ip', 'area_name')
         db_table = 'host'
 
     def __str__(self):
