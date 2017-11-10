@@ -12,23 +12,31 @@ from django.db import models
 from .models import *
 from .serializers import *
 
-
+# 检测域名格式
 def validate_dnsname(data):
-    reg = re.compile(r'[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?',re.IGNORECASE)
+    reg = re.compile(r'[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+\.?', re.IGNORECASE)
     is_dnsname = reg.match(data)
     if is_dnsname:
         return True
     else:
         raise ValidationError(u'请输入正确的域名格式')
 
+def validate_phone(num):
+    reg = re.compile(r'(13\d|14[57]|15[^4,\D]|17[13678]|18\d)\d{8}|170[0589]\d{7}')
+    is_phone = reg.match(num)
+    if is_phone:
+        return True
+    else:
+        raise ValidationError(u'请输入正确的手机格式')
 
-class UserTableViewset(viewsets.ModelViewSet):
+
+class DNSUserViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 UserTable API
     """
     # createTime = models.DateTimeField(auto_created=True)
-    queryset = UserTable.objects.all()
-    serializer_class = UserTableSerializer
+    queryset = DNSUser.objects.all()
+    serializer_class = DNSUserSerializer
 
 
 class AreaViewset(viewsets.ModelViewSet):
@@ -71,12 +79,12 @@ class AddressViewset(viewsets.ModelViewSet):
     serializer_class = AddressSerializer
 
 
-class HostRecordViewset(viewsets.ModelViewSet):
+class HostViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 HostRecord API
     """
-    queryset = HostRecord.objects.all()
-    serializer_class = HostRecordSerializer
+    queryset = Host.objects.all()
+    serializer_class = HostSerializer
 
 
 class PtrViewset(viewsets.ModelViewSet):
@@ -135,25 +143,25 @@ class ResolvViewset(viewsets.ModelViewSet):
     serializer_class = ResolvSerializer
 
 
-class MachineRoomViewset(viewsets.ModelViewSet):
-    """
-    允许用户查看或编辑 MachineRoom API
-    """
-    queryset = MachineRoom.objects.all()
-    serializer_class = MachineRoomSerializer
-
-
-class IPViewset(viewsets.ModelViewSet):
+class IPinfoViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 IP API
     """
-    queryset = IP.objects.all()
-    serializer_class = IPSerializer
+    queryset = IPinfo.objects.all()
+    serializer_class = IPinfoSerializer
 
 
-class DomainViewset(viewsets.ModelViewSet):
+class TopDomainViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 Domain API
     """
-    queryset = Domain.objects.all()
-    serializer_class = DomainSerializer
+    queryset = TopDomain.objects.all()
+    serializer_class = TopDomainSerializer
+
+
+class SecondDomainViewset(viewsets.ModelViewSet):
+    """
+    允许用户查看或编辑 Domain API
+    """
+    queryset = SecondDomain.objects.all()
+    serializer_class = SecondDomainSerializer

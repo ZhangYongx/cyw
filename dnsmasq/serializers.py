@@ -4,7 +4,7 @@ from rest_framework import serializers
 from .models import *
 
 
-class UserTableSerializer(serializers.ModelSerializer):
+class DNSUserSerializer(serializers.ModelSerializer):
     """
     序列化 Models.UserTable
     """
@@ -12,7 +12,7 @@ class UserTableSerializer(serializers.ModelSerializer):
     upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
-        model = UserTable
+        model = DNSUser
         fields = (
             '__all__'
         )
@@ -92,6 +92,7 @@ class AddressSerializer(serializers.ModelSerializer):
     """
     createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    addressIP = serializers.IPAddressField()
 
     class Meta:
         model = Address
@@ -100,7 +101,7 @@ class AddressSerializer(serializers.ModelSerializer):
         )
 
 
-class HostRecordSerializer(serializers.ModelSerializer):
+class HostSerializer(serializers.ModelSerializer):
     """
     序列化 Models.HostRecord
     """
@@ -108,7 +109,7 @@ class HostRecordSerializer(serializers.ModelSerializer):
     upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
-        model = HostRecord
+        model = Host
         fields = (
             '__all__'
         )
@@ -212,21 +213,7 @@ class ResolvSerializer(serializers.ModelSerializer):
         )
 
 
-class MachineRoomSerializer(serializers.ModelSerializer):
-    """
-    Serializer Models.MachineRoom
-    """
-    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
-    class Meta:
-        model = MachineRoom
-        fields = (
-            '__all__'
-        )
-
-
-class IPSerializer(serializers.ModelSerializer):
+class IPinfoSerializer(serializers.ModelSerializer):
     """
     Serializer Models.IP
     """
@@ -234,13 +221,13 @@ class IPSerializer(serializers.ModelSerializer):
     upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
-        model = IP
+        model = IPinfo
         fields = (
             '__all__'
         )
 
 
-class DomainSerializer(serializers.ModelSerializer):
+class TopDomainSerializer(serializers.ModelSerializer):
     """
     Serializer Models.Domain
     """
@@ -248,7 +235,21 @@ class DomainSerializer(serializers.ModelSerializer):
     upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
-        model = Domain
+        model = TopDomain
+        fields = (
+            '__all__'
+        )
+
+
+class SecondDomainSerializer(serializers.ModelSerializer):
+    """
+    Serializer Models.Domain
+    """
+    createTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    upTime = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+
+    class Meta:
+        model = SecondDomain
         fields = (
             '__all__'
         )
