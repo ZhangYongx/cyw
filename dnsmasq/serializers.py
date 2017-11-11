@@ -58,6 +58,62 @@ class AgentSerializer(serializers.ModelSerializer):
         )
 
 
+class IPinfoSerializer(serializers.ModelSerializer):
+    """
+    Serializer Models.IP
+    """
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+
+    class Meta:
+        model = IPinfo
+        fields = (
+            '__all__'
+        )
+
+
+class TopDomainSerializer(serializers.ModelSerializer):
+    """
+    Serializer Models.Domain
+    """
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+
+    class Meta:
+        model = TopDomain
+        fields = (
+            '__all__'
+        )
+
+
+class SecondDomainSerializer(serializers.ModelSerializer):
+    """
+    Serializer Models.Domain
+    """
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+
+    class Meta:
+        model = SecondDomain
+        fields = (
+            '__all__'
+        )
+
+
+class HostSerializer(serializers.ModelSerializer):
+    """
+    序列化 Models.HostRecord
+    """
+    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+
+    class Meta:
+        model = Host
+        fields = (
+            '__all__'
+        )
+
+
 class LocalSerializer(serializers.ModelSerializer):
     """
     序列化 Models.Local
@@ -92,24 +148,9 @@ class AddressSerializer(serializers.ModelSerializer):
     """
     create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    addressIP = serializers.IPAddressField()
 
     class Meta:
         model = Address
-        fields = (
-            '__all__'
-        )
-
-
-class HostSerializer(serializers.ModelSerializer):
-    """
-    序列化 Models.HostRecord
-    """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
-    class Meta:
-        model = Host
         fields = (
             '__all__'
         )
@@ -213,45 +254,17 @@ class ResolvSerializer(serializers.ModelSerializer):
         )
 
 
-class IPinfoSerializer(serializers.ModelSerializer):
-    """
-    Serializer Models.IP
-    """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
+class LoginfoSerializer(serializers.ModelSerializer):
     class Meta:
-        model = IPinfo
+        model = Loginfo
         fields = (
             '__all__'
         )
 
 
-class TopDomainSerializer(serializers.ModelSerializer):
-    """
-    Serializer Models.Domain
-    """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
+class HeartbeatSerializer(serializers.ModelSerializer):
     class Meta:
-        model = TopDomain
+        model = Heartbeat
         fields = (
             '__all__'
         )
-
-
-class SecondDomainSerializer(serializers.ModelSerializer):
-    """
-    Serializer Models.Domain
-    """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
-    class Meta:
-        model = SecondDomain
-        fields = (
-            '__all__'
-        )
-
-

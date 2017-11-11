@@ -55,6 +55,38 @@ class AgentViewset(viewsets.ModelViewSet):
     serializer_class = AgentSerializer
 
 
+class IPinfoViewset(viewsets.ModelViewSet):
+    """
+    允许用户查看或编辑 IP API
+    """
+    queryset = IPinfo.objects.all()
+    serializer_class = IPinfoSerializer
+
+
+class TopDomainViewset(viewsets.ModelViewSet):
+    """
+    允许用户查看或编辑 Domain API
+    """
+    queryset = TopDomain.objects.all()
+    serializer_class = TopDomainSerializer
+
+
+class SecondDomainViewset(viewsets.ModelViewSet):
+    """
+    允许用户查看或编辑 Domain API
+    """
+    queryset = SecondDomain.objects.all()
+    serializer_class = SecondDomainSerializer
+
+
+class HostViewset(viewsets.ModelViewSet):
+    """
+    允许用户查看或编辑 HostRecord API
+    """
+    queryset = Host.objects.all()
+    serializer_class = HostSerializer
+
+
 class LocalViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 Local API
@@ -77,14 +109,6 @@ class AddressViewset(viewsets.ModelViewSet):
     """
     queryset = Address.objects.all()
     serializer_class = AddressSerializer
-
-
-class HostViewset(viewsets.ModelViewSet):
-    """
-    允许用户查看或编辑 HostRecord API
-    """
-    queryset = Host.objects.all()
-    serializer_class = HostSerializer
 
 
 class PtrViewset(viewsets.ModelViewSet):
@@ -143,25 +167,11 @@ class ResolvViewset(viewsets.ModelViewSet):
     serializer_class = ResolvSerializer
 
 
-class IPinfoViewset(viewsets.ModelViewSet):
-    """
-    允许用户查看或编辑 IP API
-    """
-    queryset = IPinfo.objects.all()
-    serializer_class = IPinfoSerializer
+class LoginfoViewset(viewsets.ModelViewSet):
+    queryset = Loginfo.objects.all()
+    serializer_class = LoginfoSerializer
 
 
-class TopDomainViewset(viewsets.ModelViewSet):
-    """
-    允许用户查看或编辑 Domain API
-    """
-    queryset = TopDomain.objects.all()
-    serializer_class = TopDomainSerializer
-
-
-class SecondDomainViewset(viewsets.ModelViewSet):
-    """
-    允许用户查看或编辑 Domain API
-    """
-    queryset = SecondDomain.objects.all()
-    serializer_class = SecondDomainSerializer
+class HeartbeatViewset(viewsets.ModelViewSet):
+    queryset = Heartbeat.objects.all()
+    serializer_class = HeartbeatSerializer
