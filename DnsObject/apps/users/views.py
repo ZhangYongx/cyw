@@ -12,7 +12,9 @@ from rest_framework import authentication
 from rest_framework import permissions
 from rest_framework import mixins
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
-
+from rest_framework.permissions import IsAuthenticated
+from utils.permissions import IsOwnerOrReadOnly
+from django.contrib.auth import authenticate
 User = get_user_model()
 
 
@@ -51,10 +53,10 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
             if self.request.user.is_staff:
                 return serializers.UserDetailSerializer
             return serializers.UserPersonalSerializer
-        if self.action == "update":
-            if self.request.user.is_staff:
-                return serializers.UserDetailSerializer
-            return serializers.UserPersonalSerializer
+        # if self.action == "update":
+        #     if self.request.user.is_staff:
+        #         return serializers.UserDetailSerializer
+        #     return serializers.UserPersonalSerializer
         elif self.action == "create":
             return serializers.UserRegSerializer
 
@@ -66,6 +68,8 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
         """
         if self.action == "retrieve":
             return [permissions.IsAuthenticated()]
+        # if self.action == "list":
+        #     return [permissions.IsAuthenticatedOrReadOnly()]
         elif self.action == "create":
             return []
 
@@ -95,3 +99,22 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
     def perform_create(self, serializer):
         return serializer.save()
 
+
+class ChangePassWordViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+
+    serializer_class = serializers.ChangePassWordSerializer
+    authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
+    permission_classes = (IsAuthenticated,)
+
+    def retrieve(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset)
+        return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_queryset()
+        serializer = self.get_serializer(data=self.request.data)
+        serializer.is_valid(raise_exception=True)
+
+    def get_queryset(self):
+        return User.objects.get(username=self.request.user)

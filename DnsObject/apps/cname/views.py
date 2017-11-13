@@ -14,7 +14,7 @@ class CnameViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
-    queryset = models.Area.objects.all()
+    queryset = models.Cname.objects.all()
     serializer_class = serializers.CnameSerializers
 
     def create(self, request, *args, **kwargs):

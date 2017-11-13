@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from rest_framework.documentation import include_docs_urls
 from django.contrib import admin
 from rest_framework.authtoken import views
 from address.views import AddressViewsSet
 from area.views import AreaViewsSet
-from users.views import UserViewSet
+from users.views import UserViewSet, ChangePassWordViewSet
 from cname.views import CnameViewSet
+from users import changepawword
 from seconddomain.views import SecondDomainViewSet
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token
+from django.contrib.auth.decorators import login_required
 
 #注册路由
 router = DefaultRouter()
@@ -18,6 +20,7 @@ router.register(r'area', AreaViewsSet, base_name='area')
 router.register(r'users', UserViewSet, base_name='users')
 router.register(r'cname', CnameViewSet, base_name='cname')
 router.register(r'seconddomain', SecondDomainViewSet, base_name='seconddomain')
+router.register(r'changepassword', ChangePassWordViewSet, base_name='changepassword')
 
 urlpatterns = [
 
@@ -38,4 +41,6 @@ urlpatterns = [
 
     #jwt的认证接口
     url(r'^login/', obtain_jwt_token),
+
+    # url(r'^changepwd/$', login_required(changepawword.changepwd), name="changepwd"),
 ]

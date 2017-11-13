@@ -18,7 +18,7 @@ class Address(models.Model):
     create_user = models.CharField(max_length=45, verbose_name="创建者")
     update_user = models.CharField(max_length=45, verbose_name="修改者")
     remarks = models.CharField(max_length=45, null=True, blank=True, verbose_name="备注")
-    area_name = models.ForeignKey(Area, models.DO_NOTHING, db_column='area_name')
+    area_name = models.ForeignKey(Area, models.DO_NOTHING, db_column='area_name', verbose_name="区域")
 
     class Meta:
         managed = True

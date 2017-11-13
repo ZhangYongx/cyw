@@ -62,7 +62,7 @@ class AddressViewsSet(viewsets.ModelViewSet):
             根据Id获取域名解析相关信息，并将二进制IP转换为点分十进制
         """
         instance = self.get_object()
-        instance.ip = IpReplace(instance.ip).bintoip()
+        instance.addr_ip = IpReplace(instance.addr_ip).bintoip()
         serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
@@ -76,5 +76,5 @@ class AddressViewsSet(viewsets.ModelViewSet):
         if areaid is not None:
             queryset = queryset.filter(area_id=areaid)
         for i in queryset:
-            i.ip = IpReplace(i.ip).bintoip()
+            i.ip = IpReplace(i.addr_ip).bintoip()
         return queryset
