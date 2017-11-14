@@ -20,6 +20,7 @@ Icon
 .pyc
 .sqlite3
 .idea
+
 __init__.py
 # Directories potentially created on remote AFP share
 .AppleDB

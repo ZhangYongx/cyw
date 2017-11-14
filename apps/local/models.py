@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from ipinfo import IPinfo
-from area import Area
+from ipinfo.models import IPinfo
+from area.models import Area
 
 # Create your models here.
 

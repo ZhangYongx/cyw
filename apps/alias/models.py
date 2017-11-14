@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from area import Area
+from area.models import Area
 
 # Create your models here.
 

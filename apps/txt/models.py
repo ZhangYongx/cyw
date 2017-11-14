@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from area import Area
-from seconddomain import SecondDomain
+from area.models import Area
+from seconddomain.models import SecondDomain
 
 # Create your models here.
 

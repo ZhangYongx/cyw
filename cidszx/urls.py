@@ -17,48 +17,48 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
 
-from address import views
-from agent import views
-from alias import views
-from area import views
-from cname import views
-from dnsname import views
-from heartbeat import views
-from host import views
-from ipinfo import views
-from local import views
-from loginfo import views
-from mx import views
-from ptr import views
-from resolv import views
-from seconddomain import views
-from server import views
-from srv import views
-from topdomain import views
-from txt import views
+from address.views import AddressViewset
+from agent.views import AgentViewset
+from alias.views import AliasViewset
+from area.views import AreaViewset
+from cname.views import CnameViewset
+from dnsuser.views import DNSUserViewset
+from heartbeat.views import HeartbeatViewset
+from host.views import HostViewset
+from ipinfo.views import IPinfoViewset
+from local.views import LocalViewset
+from loginfo.views import LoginfoViewset
+from mx.views import MxViewset
+from ptr.views import PtrViewset
+from resolv.views import ResolvViewset
+from seconddomain.views import SecondDomainViewset
+from server.views import ServerViewset
+from srv.views import SrvViewset
+from topdomain.views import TopDomainViewset
+from txt.views import TxtViewset
 
 
 router = routers.DefaultRouter()
 
-router.register(r'DNSUser', views.DNSUserViewset)
-router.register(r'Area', views.AreaViewset)
-router.register(r'Agent', views.AgentViewset)
-router.register(r'IPinfo', views.IPinfoViewset)
-router.register(r'TopDomain', views.TopDomainViewset)
-router.register(r'SecondDomain', views.SecondDomainViewset)
-router.register(r'Host', views.HostViewset)
-router.register(r'Local', views.LocalViewset)
-router.register(r'Server', views.AddressViewset)
-router.register(r'Address', views.AddressViewset)
-router.register(r'Ptr', views.PtrViewset)
-router.register(r'Srv', views.SrvViewset)
-router.register(r'Mx', views.MxViewset)
-router.register(r'Txt', views.TxtViewset)
-router.register(r'Cname', views.CnameViewset)
-router.register(r'Alias', views.AliasViewset)
-router.register(r'Resolv', views.ResolvViewset)
-router.register(r'Loginfo', views.LoginfoViewset)
-router.register(r'Heartbeat', views.HeartbeatViewset)
+router.register(r'DNSUser', DNSUserViewset)
+router.register(r'Area', AreaViewset)
+router.register(r'Agent', AgentViewset)
+router.register(r'IPinfo', IPinfoViewset)
+router.register(r'TopDomain', TopDomainViewset)
+router.register(r'SecondDomain', SecondDomainViewset)
+router.register(r'Host', HostViewset)
+router.register(r'Local', LocalViewset)
+router.register(r'Server', ServerViewset)
+router.register(r'Address', AddressViewset)
+router.register(r'Ptr', PtrViewset)
+router.register(r'Srv', SrvViewset)
+router.register(r'Mx', MxViewset)
+router.register(r'Txt', TxtViewset)
+router.register(r'Cname', CnameViewset)
+router.register(r'Alias', AliasViewset)
+router.register(r'Resolv', ResolvViewset)
+router.register(r'Loginfo', LoginfoViewset)
+router.register(r'Heartbeat', HeartbeatViewset)
 
 
 urlpatterns = [

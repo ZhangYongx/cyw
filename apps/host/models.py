@@ -2,9 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from seconddomain import SecondDomain
-from ipinfo import IPinfo
-from area import Area
+from seconddomain.models import SecondDomain
+from ipinfo.models import IPinfo
+from area.models import Area
 
 # Create your models here.
 
