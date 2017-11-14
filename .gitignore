@@ -17,9 +17,9 @@ Icon
 .TemporaryItems
 .Trashes
 .VolumeIcon.icns
-.pyc
-.sqlite3
-.idea
+*.pyc
+*.sqlite3
+*.idea
 
 __init__.py
 # Directories potentially created on remote AFP share
