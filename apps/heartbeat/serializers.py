@@ -10,4 +10,6 @@ class HeartbeatSerializer(serializers.ModelSerializer):
         fields = (
             '__all__'
         )
+        read_only_field = ('create_user', 'update_user',)
+
 
