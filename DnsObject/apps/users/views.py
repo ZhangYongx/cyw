@@ -53,14 +53,14 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
             if self.request.user.is_staff:
                 return serializers.UserDetailSerializer
             return serializers.UserPersonalSerializer
-        # if self.action == "update":
-        #     if self.request.user.is_staff:
-        #         return serializers.UserDetailSerializer
-        #     return serializers.UserPersonalSerializer
+        if self.action == "update":
+            if self.request.user.is_staff:
+                return serializers.UserDetailSerializer
+            return serializers.UserPersonalSerializer
         elif self.action == "create":
             return serializers.UserRegSerializer
 
-        return serializers.UserRegSerializer
+        return serializers.UserPersonalSerializer
 
     def get_permissions(self):
         """
@@ -106,15 +106,26 @@ class ChangePassWordViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
     authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
     permission_classes = (IsAuthenticated,)
 
-    def retrieve(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset)
+    def update(self, request, *args, **kwargs):
+        """
+            修改信息，修改人默认为当前用户，如果IP有修改，将转换为二进制存储。
+        """
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['update_user'] = self.request.user.username
+        self.perform_update(serializer)
         return Response(serializer.data)
 
-    def update(self, request, *args, **kwargs):
-        instance = self.get_queryset()
-        serializer = self.get_serializer(data=self.request.data)
-        serializer.is_valid(raise_exception=True)
 
     def get_queryset(self):
-        return User.objects.get(username=self.request.user)
+
+        """
+            根据区域id查询，获取相关数据，并将IP由二进制转换为点分十进制
+        """
+        queryset = User.objects.all()
+        username = self.request.query_params.get('username', None)
+        if username is not None:
+            queryset = queryset.filter(username=username)
+        return queryset

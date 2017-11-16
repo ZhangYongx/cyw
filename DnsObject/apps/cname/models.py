@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
-from area.models import Area
+from agent.models import Agent
 from seconddomain.models import SecondDomain
 
 
@@ -15,7 +14,7 @@ class Cname(models.Model):
     create_user = models.CharField(max_length=30, verbose_name="创建者")
     update_user = models.CharField(max_length=30, verbose_name="修改者")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
-    area_name = models.ForeignKey(Area, models.DO_NOTHING, db_column='area_name', verbose_name="区域")
+    agentid = models.ForeignKey(Agent, to_field='agentid', verbose_name="Agent编号")
 
     class Meta:
         verbose_name = '别名'

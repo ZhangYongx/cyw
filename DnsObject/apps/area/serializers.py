@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
 from area import models
-from users.models import DnsUserProfile
 
 
 class AreaSerializer(serializers.ModelSerializer):

@@ -1,0 +1,30 @@
+# -*- coding: utf-8 -*-
+from __future__ import unicode_literals
+from django.db import models
+from seconddomain.models import SecondDomain
+from agent.models import Agent
+
+
+class Srv(models.Model):
+    """
+    SRV Table
+    """
+    domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="域名")
+    srv_domain = models.CharField(max_length=45, null=False, verbose_name="服务地址")
+    srv_port = models.IntegerField(verbose_name="端口")
+    priority = models.IntegerField(default=10, verbose_name="优先级")
+    weight = models.IntegerField(default=10, verbose_name="权重")
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
+    create_user = models.CharField(default='now user', editable=False, max_length=30, verbose_name="创建用户")
+    update_user = models.CharField(default='now user', max_length=30, editable=False, verbose_name="更新用户")
+    agentid = models.ForeignKey(Agent, to_field='agentid', verbose_name="Agent编号")
+    remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
+
+    class Meta:
+        managed = True
+        db_table = 'srv'
+        unique_together = ('srv_domain', 'agentid')
+
+    def __str__(self):
+        return self.domain

@@ -32,12 +32,15 @@ class UserDetailSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("手机号码非法！")
         return mobile
 
+    password = serializers.CharField(
+        style={'input_type': 'password'}, help_text="密码", label="密码", write_only=True,
+    )
     class Meta:
         model = models.DnsUserProfile
         fields = (
             '__all__'
         )
-        read_only_fields = ('create_user', 'update_user',)
+        read_only_fields = ('password', 'create_user', 'update_user',)
 
 
 class UserPersonalSerializer(serializers.ModelSerializer):
@@ -98,36 +101,34 @@ class UserRegSerializer(serializers.ModelSerializer):
         fields = ("id", "username", "password", "mobile", "email")
 
 
+
 class ChangePassWordSerializer(serializers.ModelSerializer):
-    oldpassword = serializers.CharField(style={'input_type': 'password'}, help_text="请输入原始密码", label="密码",
-                                        write_only=True)
-    newpassword = serializers.CharField(style={'input_type': 'password'}, help_text="请输入新密码", label="新密码",
-                                        write_only=True)
-    ConfirmationPassword = serializers.CharField(style={'input_type': 'password'}, help_text="请再次输入",
-                                                 label="确认密码", write_only=True)
-    # username = serializers.CharField(label="用户名", help_text="用户名", required=True, allow_blank=False,
-    #                                  validators=[UniqueValidator(queryset=User.objects.all(), message="用户已经存在")])
-    # password = serializers.CharField(
-    #     style={'input_type': 'password'}, help_text="密码", label="密码", write_only=True,
-    # )
+    # oldpassword = serializers.CharField(style={'input_type': 'password'}, help_text="请输入原始密码", label="密码",
+    #                                     write_only=True)
+    # newpassword = serializers.CharField(style={'input_type': 'password'}, help_text="请输入新密码", label="新密码",
+    #                                     write_only=True)
+    # ConfirmationPassword = serializers.CharField(style={'input_type': 'password'}, help_text="请再次输入",
+    #                                              label="确认密码", write_only=True)
+    username = serializers.CharField(label="用户名", help_text="用户名", required=True, allow_blank=False,
+                                     validators=[UniqueValidator(queryset=User.objects.all(), message="用户已经存在")])
+    password = serializers.CharField(
+        style={'input_type': 'password'}, help_text="密码", label="密码", write_only=True,
+    )
 
     def update(self, instance, validated_data):
-        verify_records = models.DnsUserProfile.objects.filter(username=self.initial_data['username'])
-        user = super(ChangePassWordSerializer,self).update(instance, validated_data=validated_data)
-        if verify_records.password == validated_data['oldpassword']:
-            newpassword = validated_data['newpassword']
-            user.set_password(newpassword)
-            user.save()
-            return user
 
-
-    def validate(self, attrs):
-        del attrs["oldpassword"]
-        del attrs["newpassword"]
-        del attrs["ConfirmationPassword"]
-        return attrs
+        user = super(ChangePassWordSerializer, self).update(instance,validated_data=validated_data)
+        user.set_password(validated_data["password"])
+        user.save()
+        return user
+    # def validate(self, attrs):
+    #     del attrs["oldpassword"]
+    #     del attrs["newpassword"]
+    #     del attrs["ConfirmationPassword"]
+    #     return attrs
 
     class Meta:
         model = User
-        fields = ("id", "username", "oldpassword", "newpassword", "ConfirmationPassword")
-        # read_only_fields = ('username',)
+        # fields = ("id", "username", "oldpassword", "newpassword", "ConfirmationPassword")
+        fields = ("username","password","update_user")
+        read_only_fields = ('update_user',)

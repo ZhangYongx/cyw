@@ -72,9 +72,9 @@ class AddressViewsSet(viewsets.ModelViewSet):
             根据区域id查询，获取相关数据，并将IP由二进制转换为点分十进制
         """
         queryset = models.Address.objects.all()
-        areaid = self.request.query_params.get('areaid', None)
-        if areaid is not None:
-            queryset = queryset.filter(area_id=areaid)
+        agentid = self.request.query_params.get('agentid', None)
+        if agentid is not None:
+            queryset = queryset.filter(agentid=agentid)
         for i in queryset:
-            i.ip = IpReplace(i.addr_ip).bintoip()
+            i.addr_ip = IpReplace(i.addr_ip).bintoip()
         return queryset

@@ -38,7 +38,22 @@ INSTALLED_APPS = [
     'area.apps.AreaConfig',
     'users.apps.UsersConfig',
     'cname.apps.CnameConfig',
+    'heartbeat.apps.HertbeatConfig',
     'seconddomain.apps.SeconddomainConfig',
+    'agent.apps.AgentConfig',
+    'alias.apps.AliasConfig',
+    'host.apps.HostConfig',
+    'ipinfo.apps.IpinfoConfig',
+    'local.apps.LocalConfig',
+    'loginfo.apps.LoginfoConfig',
+    'mx.apps.MxConfig',
+    'ptr.apps.PtrConfig',
+    'resolv.apps.ResolvConfig',
+    'server.apps.ServerConfig',
+    'srv.apps.SrvConfig',
+    'topdomain.apps.TopdomainConfig',
+    'txt.apps.TxtConfig',
+    'corsheaders',
     'rest_framework.authtoken'
 ]
 
@@ -84,7 +99,7 @@ WSGI_APPLICATION = 'DnsObject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dnsdb',
+        'NAME': 'discuz',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',
