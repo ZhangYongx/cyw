@@ -23,7 +23,7 @@ class IPinfoViewset(viewsets.ModelViewSet):
         生成创建人信息
         """
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid()
         serializer.validated_data['create_user'] = self.request.user
         serializer.validated_data['update_user'] = self.request.user
         serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
@@ -37,8 +37,9 @@ class IPinfoViewset(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid()
         serializer.validated_data['create_user'] = self.request.user
         serializer.validated_data['update_user'] = self.request.user
         serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
+        self.perform_update(serializer)
         return Response(serializer.data)

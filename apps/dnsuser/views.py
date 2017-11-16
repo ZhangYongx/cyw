@@ -6,6 +6,7 @@ import re
 from django.core.exceptions import ValidationError
 
 from rest_framework import viewsets
+from rest_framework.response import Response
 from .models import DNSUser
 from .serializers import DNSUserSerializer
 
@@ -17,6 +18,22 @@ class DNSUserViewset(viewsets.ModelViewSet):
     # createTime = models.DateTimeField(auto_created=True)
     queryset = DNSUser.objects.all()
     serializer_class = DNSUserSerializer
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid()
+    #     serializer.validated_data['create_user'] = self.request.user
+    #     self.perform_create(serializer)
+    #     return Response(serializer.data)
+
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid()
+        serializer.validated_data['create_user'] = self.request.user
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
 
 def validate_dnsname(data):

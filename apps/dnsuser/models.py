@@ -23,7 +23,7 @@ class DNSUser(models.Model):
     phone = models.CharField(max_length=11, null=False, verbose_name="手机号")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
-    update_user = models.CharField(default='now user', max_length=30, editable=False, verbose_name="更新用户")
+    update_user = models.CharField(max_length=30, editable=False, verbose_name="更新用户")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
 
     class Meta:

@@ -16,6 +16,6 @@ class DNSUserSerializer(serializers.ModelSerializer):
         fields = (
             '__all__'
         )
-        read_only_field = ('create_user', 'update_user',)
+        read_only_field = ('update_user',)
 
 

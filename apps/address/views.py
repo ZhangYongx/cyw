@@ -26,7 +26,7 @@ class AddressViewset(viewsets.ModelViewSet):
         serializer.is_valid()
         serializer.validated_data['create_user'] = self.request.user
         serializer.validated_data['update_user'] = self.request.user
-        serializer.validated_data['addr_ip'] = IP(serializer.validated_data['addr_ip']).strBin()
+        # serializer.validated_data['addr_ip'] = IP(serializer.validated_data['addr_ip']).strBin()
         self.perform_create(serializer)
         return Response(serializer.data)
 
@@ -40,6 +40,6 @@ class AddressViewset(viewsets.ModelViewSet):
         serializer.is_valid()
         serializer.validated_data['create_user'] = self.request.user
         serializer.validated_data['update_user'] = self.request.user
-        serializer.validated_data['addr_ip'] = IP(serializer.validated_data['addr_ip']).strBin()
+        # serializer.validated_data['addr_ip'] = IP(serializer.validated_data['addr_ip']).strBin()
         self.perform_update(serializer)
         return Response(serializer.data)
