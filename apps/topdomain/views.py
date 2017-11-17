@@ -20,7 +20,7 @@ class TopDomainViewset(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid()
-        serializer.validated_data['delete_user'] = self.request.user
+        serializer.validated_data['create_user'] = self.request.user
         serializer.validated_data['update_user'] = self.request.user
         self.perform_create(serializer)
         return Response(serializer.data)
@@ -30,7 +30,7 @@ class TopDomainViewset(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid()
-        serializer.validated_data['delete_user'] = self.request.user
+        serializer.validated_data['create_user'] = self.request.user
         serializer.validated_data['update_user'] = self.request.user
         self.perform_update(serializer)
         return Response(serializer.data)
