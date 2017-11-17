@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import viewsets
 from .models import Srv
 from .serializers import SrvSerializer
-
+from PublicMethod.ipreplace import IpReplace
 
 class SrvViewset(viewsets.ModelViewSet):
     """
@@ -16,7 +16,7 @@ class SrvViewset(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """
-            添加信息，创建者和修改者默认为当前用户。IP转换为二进制存储
+            添加信息，创建者和修改者默认为当前用户
          """
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
@@ -27,7 +27,7 @@ class SrvViewset(viewsets.ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         """
-            修改信息，修改人默认为当前用户，如果IP有修改，将转换为二进制存储。
+            修改信息，修改人默认为当前用户
         """
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
@@ -37,3 +37,13 @@ class SrvViewset(viewsets.ModelViewSet):
         self.perform_update(serializer)
         return Response(serializer.data)
 
+    def get_queryset(self):
+
+        """
+            根据区域查询，获取相关数据
+        """
+        queryset = Srv.objects.all()
+        agentid = self.request.query_params.get('agentid', None)
+        if agentid is not None:
+            queryset = queryset.filter(agentid=agentid)
+        return queryset

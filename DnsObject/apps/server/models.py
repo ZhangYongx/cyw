@@ -11,7 +11,7 @@ class Server(models.Model):
     """
     domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="域名")
     reverse_ip = models.GenericIPAddressField(verbose_name="反向IP")
-    nameserver_ip = models.GenericIPAddressField(verbose_name="NS IP", help_text="请输入域名服务器的")
+    nameserver_ip = models.GenericIPAddressField(verbose_name="NS IP", help_text="请输入域名服务器的IP")
     nameserver_port = models.IntegerField(default=53, verbose_name="NS PORT", help_text="请输入域名服务器的端口")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")

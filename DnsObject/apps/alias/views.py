@@ -41,6 +41,13 @@ class AliasViewset(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
+        if serializer.validated_data['old_ip'] is not None:
+            serializer.validated_data['old_ip'] = IP(serializer.validated_data['old_ip']).strBin()
+        if serializer.validated_data['start_ip'] is not None:
+            serializer.validated_data['start_ip'] = IP(serializer.validated_data['start_ip']).strBin()
+        if serializer.validated_data['end_ip'] is not None:
+            serializer.validated_data['end_ip'] = IP(serializer.validated_data['end_ip']).strBin()
+        serializer.validated_data['new_ip'] = IP(serializer.validated_data['new_ip']).strBin()
         serializer.validated_data['update_user'] = self.request.user.username
         self.perform_update(serializer)
         return Response(serializer.data)

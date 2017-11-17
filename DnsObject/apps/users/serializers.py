@@ -103,12 +103,6 @@ class UserRegSerializer(serializers.ModelSerializer):
 
 
 class ChangePassWordSerializer(serializers.ModelSerializer):
-    # oldpassword = serializers.CharField(style={'input_type': 'password'}, help_text="请输入原始密码", label="密码",
-    #                                     write_only=True)
-    # newpassword = serializers.CharField(style={'input_type': 'password'}, help_text="请输入新密码", label="新密码",
-    #                                     write_only=True)
-    # ConfirmationPassword = serializers.CharField(style={'input_type': 'password'}, help_text="请再次输入",
-    #                                              label="确认密码", write_only=True)
     username = serializers.CharField(label="用户名", help_text="用户名", required=True, allow_blank=False,
                                      validators=[UniqueValidator(queryset=User.objects.all(), message="用户已经存在")])
     password = serializers.CharField(
@@ -121,14 +115,8 @@ class ChangePassWordSerializer(serializers.ModelSerializer):
         user.set_password(validated_data["password"])
         user.save()
         return user
-    # def validate(self, attrs):
-    #     del attrs["oldpassword"]
-    #     del attrs["newpassword"]
-    #     del attrs["ConfirmationPassword"]
-    #     return attrs
 
     class Meta:
         model = User
-        # fields = ("id", "username", "oldpassword", "newpassword", "ConfirmationPassword")
         fields = ("username","password","update_user")
         read_only_fields = ('update_user',)

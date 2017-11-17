@@ -39,3 +39,15 @@ class CnameViewSet(viewsets.ModelViewSet):
         serializer.validated_data['update_user'] = self.request.user.username
         self.perform_update(serializer)
         return Response(serializer.data)
+
+
+    def get_queryset(self):
+
+        """
+            根据区域id查询，获取相关数据
+        """
+        queryset = models.Cname.objects.all()
+        agentid = self.request.query_params.get('agentid', None)
+        if agentid is not None:
+            queryset = queryset.filter(agentid=agentid)
+        return queryset

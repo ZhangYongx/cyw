@@ -108,7 +108,7 @@ class ChangePassWordViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
 
     def update(self, request, *args, **kwargs):
         """
-            修改信息，修改人默认为当前用户，如果IP有修改，将转换为二进制存储。
+            修改信息，修改人默认为当前用户
         """
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
@@ -122,7 +122,7 @@ class ChangePassWordViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
     def get_queryset(self):
 
         """
-            根据区域id查询，获取相关数据，并将IP由二进制转换为点分十进制
+            根据用户名查询，获取相关数据
         """
         queryset = User.objects.all()
         username = self.request.query_params.get('username', None)
