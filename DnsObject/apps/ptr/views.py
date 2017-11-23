@@ -4,12 +4,20 @@ from rest_framework import viewsets
 from .models import Ptr
 from .serializers import PtrSerializer
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.authentication import SessionAuthentication
+from utils.permissions import IsOwnerOrReadOnly
+from PublicMethod.ipreplace import IpReplace
+from IPy import IP
+from ipinfo.models import IPinfo
 
 class PtrViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 Ptr API
     """
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     queryset = Ptr.objects.all()
     serializer_class = PtrSerializer
 
@@ -19,7 +27,7 @@ class PtrViewset(viewsets.ModelViewSet):
          """
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            # serializer.validated_data['ptr_ip'] = IP(serializer.validated_data['ptr_ip']).strBin()
+            # serializer.validated_data['ptr_ip'] = IP(serializer.validated_data['ptr_ip']).reverseNames()[0]
             serializer.validated_data['create_user'] = self.request.user.username
             serializer.validated_data['update_user'] = self.request.user.username
             self.perform_create(serializer)
@@ -33,19 +41,19 @@ class PtrViewset(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
-        # serializer.validated_data['ptr_ip'] = IP(serializer.validated_data['ptr_ip']).strBin()
+        # serializer.validated_data['ip'] = IP(serializer.validated_data['ip']).strBin()
         serializer.validated_data['update_user'] = self.request.user.username
         self.perform_update(serializer)
         return Response(serializer.data)
 
-    def retrieve(self, request, *args, **kwargs):
-        """
-            根据Id获取域名解析相关信息，并将二进制IP转换为点分十进制
-        """
-        instance = self.get_object()
-        # instance.ptr_ip = IpReplace(instance.ptr_ip).bintoip()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+    # def retrieve(self, request, *args, **kwargs):
+    #     """
+    #         根据Id获取域名解析相关信息，并将二进制IP转换为点分十进制
+    #     """
+    #     instance = self.get_object()
+    #     instance.ip = IP(instance.ip).reverseNames()[0]
+    #     serializer = self.get_serializer(instance)
+    #     return Response(serializer.data)
 
     def get_queryset(self):
 

@@ -99,7 +99,7 @@ WSGI_APPLICATION = 'DnsObject.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'discuz',
+        'NAME': 'dnsdb',
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': 'localhost',

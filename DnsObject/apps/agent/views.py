@@ -62,6 +62,6 @@ class AgentViewSet(mixins.CreateModelMixin,mixins.ListModelMixin, mixins.UpdateM
         if agentid is not None:
             queryset = queryset.filter(agentid=agentid)
         for i in queryset:
-            i.ip = IpReplace(i.agt_ip).bintoip()
+            i.agt_ip = IpReplace(i.agt_ip).bintoip()
         return queryset
 

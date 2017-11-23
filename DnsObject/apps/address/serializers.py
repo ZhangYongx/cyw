@@ -11,7 +11,7 @@ class AddressSerializer(serializers.ModelSerializer):
     #外键关联
     create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
-
+    ip = serializers.IPAddressField(source='addr_ip', read_only=True)
     class Meta:
         model = models.Address
         fields = (

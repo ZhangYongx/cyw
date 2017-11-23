@@ -15,4 +15,4 @@ class IPinfoSerializer(serializers.ModelSerializer):
         fields = (
             '__all__'
         )
-        read_only_fields = ('create_user', 'update_user',)
+        read_only_fields = ('create_user', 'update_user','reverse_ip',)

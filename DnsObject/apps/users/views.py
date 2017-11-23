@@ -120,7 +120,6 @@ class ChangePassWordViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
 
 
     def get_queryset(self):
-
         """
             根据用户名查询，获取相关数据
         """

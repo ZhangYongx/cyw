@@ -7,7 +7,7 @@ from seconddomain.models import SecondDomain
 
 class Cname(models.Model):
     cname = models.CharField(unique=True, max_length=45, verbose_name="别名")
-    domain = models.ForeignKey(SecondDomain, models.DO_NOTHING, db_column='domain', verbose_name="二级域名")
+    domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="二级域名")
     ttl = models.SmallIntegerField(default=600, verbose_name="生命周期")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")

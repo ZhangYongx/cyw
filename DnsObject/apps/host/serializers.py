@@ -9,7 +9,7 @@ class HostSerializer(serializers.ModelSerializer):
     """
     create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
+    ip = serializers.IPAddressField(source='host_ip', read_only=True)
     class Meta:
         model = Host
         fields = (

@@ -4,11 +4,18 @@ from rest_framework import viewsets
 from .models import TopDomain
 from .serializers import TopDomainSerializer
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.authentication import SessionAuthentication
+from utils.permissions import IsOwnerOrReadOnly
+
 
 class TopDomainViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 Domain API
     """
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     queryset = TopDomain.objects.all()
     serializer_class = TopDomainSerializer
 

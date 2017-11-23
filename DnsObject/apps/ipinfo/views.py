@@ -7,11 +7,18 @@ from .serializers import IPinfoSerializer
 from rest_framework.response import Response
 from IPy import IP
 from PublicMethod.ipreplace import IpReplace
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.authentication import SessionAuthentication
+from utils.permissions import IsOwnerOrReadOnly
+
 
 class IPinfoViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 IP API
     """
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     queryset = IPinfo.objects.all()
     serializer_class = IPinfoSerializer
 
@@ -23,6 +30,7 @@ class IPinfoViewset(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.validated_data['create_user'] = self.request.user.username
             serializer.validated_data['update_user'] = self.request.user.username
+            serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['ipaddress']).reverseNames()[0]
             serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
             self.perform_create(serializer)
             return Response(serializer.data)
@@ -35,6 +43,7 @@ class IPinfoViewset(viewsets.ModelViewSet):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
+        serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['ipaddress']).reverseNames()[0]
         serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
         serializer.validated_data['update_user'] = self.request.user.username
         self.perform_update(serializer)
@@ -59,5 +68,5 @@ class IPinfoViewset(viewsets.ModelViewSet):
         if agentid is not None:
             queryset = queryset.filter(agentid=agentid)
         for i in queryset:
-            i.ip = IpReplace(i.ipaddress).bintoip()
+            i.ipaddress = IpReplace(i.ipaddress).bintoip()
         return queryset

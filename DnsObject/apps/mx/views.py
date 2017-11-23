@@ -4,12 +4,18 @@ from rest_framework import viewsets
 from .models import Mx
 from .serializers import MxSerializer
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.authentication import SessionAuthentication
+from utils.permissions import IsOwnerOrReadOnly
 
 
 class MxViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 Mx API
     """
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     queryset = Mx.objects.all()
     serializer_class = MxSerializer
 

@@ -5,11 +5,19 @@ from rest_framework import viewsets
 from .models import Srv
 from .serializers import SrvSerializer
 from PublicMethod.ipreplace import IpReplace
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.authentication import SessionAuthentication
+from utils.permissions import IsOwnerOrReadOnly
+
 
 class SrvViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 Srv API
     """
+
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     queryset = Srv.objects.all()
     serializer_class = SrvSerializer
 

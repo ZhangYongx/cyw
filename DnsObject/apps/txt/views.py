@@ -4,11 +4,19 @@ from rest_framework import viewsets
 from .models import Txt
 from .serializers import TxtSerializer
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
+from rest_framework.authentication import SessionAuthentication
+from utils.permissions import IsOwnerOrReadOnly
+
 
 class TxtViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 Txt API
     """
+    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+    authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
+
     queryset = Txt.objects.all()
     serializer_class = TxtSerializer
 
