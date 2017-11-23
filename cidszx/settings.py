@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Django settings for cidszx project.
 
@@ -15,6 +16,7 @@ import sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
 # print("sys.path:" + sys.path.__str__())
 
@@ -39,9 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'rest_framework',
-    # 'dnsmasq.apps.DnsmasqConfig',
     'dnsuser.apps.DnsuserConfig',
     'area.apps.AreaConfig',
     'topdomain.apps.TopdomainConfig',
@@ -68,7 +68,11 @@ INSTALLED_APPS = [
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser',
-    ]
+    ],
+    # 'DEFAULT_PAGINATION_CLASS':[
+    #     'rest_framework.pagination.PageNumberPagination',
+    # ],
+    # 'PAGE_SIZE': 10,
 }
 
 MIDDLEWARE = [
@@ -142,13 +146,14 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'zh-hans'
 
+# 后台统一使用 UTC 的时间存储，web显示为本地时间由前端来处理。
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)

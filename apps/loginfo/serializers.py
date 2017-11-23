@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 # Author:zhangxun
-from rest_framework import serializers
+from PublicFunc.serializers import AllSerializer
 from .models import Loginfo
 
 
-class LoginfoSerializer(serializers.ModelSerializer):
+class LoginfoSerializer(AllSerializer):
+    """
+    序列化 Loginfo表
+    """
     class Meta:
         model = Loginfo
-        fields = (
-            '__all__'
-        )
+        fields = '__all__'

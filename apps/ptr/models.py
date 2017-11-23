@@ -29,4 +29,3 @@ class Ptr(models.Model):
 
     def __str__(self):
         return str(self.ptr_ip)
-

@@ -1,20 +1,15 @@
 # -*- coding: utf-8 -*-
 # Author:zhangxun
-from rest_framework import serializers
+from PublicFunc.serializers import AllSerializer
 from .models import Agent
 
 
-class AgentSerializer(serializers.ModelSerializer):
+class AgentSerializer(AllSerializer):
     """
     序列化 Models.Agent
     """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
     class Meta:
         model = Agent
-        fields = (
-            '__all__'
-        )
-        read_only_field = ('create_user', 'update_user',)
+        fields = '__all__'
+
 

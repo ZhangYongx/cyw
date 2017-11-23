@@ -1,21 +1,15 @@
 # -*- coding: utf-8 -*-
-# Author:zhangxun
+__author__ = "zhangxun"
 
-from rest_framework import serializers
+from PublicFunc.serializers import AllSerializer
 from .models import Address
 
 
-class AddressSerializer(serializers.ModelSerializer):
+class AddressSerializer(AllSerializer):
     """
     序列化 Models.Address
     """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
     class Meta:
         model = Address
-        fields = (
-            '__all__'
-        )
-        read_only_fields = ('create_user', 'update_user',)
+        fields = '__all__'
 

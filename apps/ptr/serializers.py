@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
 # Author:zhangxun
-from rest_framework import serializers
+
+from PublicFunc.serializers import AllSerializer
 from .models import Ptr
 
 
-class PtrSerializer(serializers.ModelSerializer):
+class PtrSerializer(AllSerializer):
     """
     序列化 Models.Ptr
     """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
     class Meta:
         model = Ptr
-        fields = (
-            '__all__'
-        )
-        read_only_field = ('create_user', 'update_user',)
+        fields = '__all__'
+

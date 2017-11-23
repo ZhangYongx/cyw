@@ -1,21 +1,16 @@
 # -*- coding: utf-8 -*-
 # Author:zhangxun
-from rest_framework import serializers
+from PublicFunc.serializers import AllSerializer
 from .models import Srv
 
 
-class SrvSerializer(serializers.ModelSerializer):
+class SrvSerializer(AllSerializer):
     """
     序列化 Models.Srv
     """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
     class Meta:
         model = Srv
-        fields = (
-            '__all__'
-        )
-        read_only_field = ('create_user', 'update_user',)
+        fields = '__all__'
+        # read_only_field = ('create_user', 'update_user',)
 
 

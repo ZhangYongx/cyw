@@ -12,6 +12,7 @@ class Area(models.Model):
     Area Table
     """
     name = models.CharField(max_length=10, unique=True, verbose_name="区域简称", help_text="请填写区域的英文缩写")
+    # sn = models.CharField(max_length=10, unique=True, verbose_name="sn")
     fullname = models.CharField(max_length=45, unique=True, blank=False, verbose_name="区域名")
     machine_name = models.CharField(max_length=45, unique=True, blank=False, null=False, verbose_name="机房名")
     responsible = models.ForeignKey(DNSUser, to_field='username', verbose_name="负责人")

@@ -6,3 +6,4 @@ from django.apps import AppConfig
 
 class DnsuserConfig(AppConfig):
     name = 'dnsuser'
+    verbose_name = '用户'

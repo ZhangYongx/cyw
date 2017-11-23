@@ -1,19 +1,14 @@
 # -*- coding: utf-8 -*-
 # Author:zhangxun
-from rest_framework import serializers
+
+from PublicFunc.serializers import AllSerializer
 from .models import Mx
 
 
-class MxSerializer(serializers.ModelSerializer):
+class MxSerializer(AllSerializer):
     """
     序列化 Models.Mx
     """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-
     class Meta:
         model = Mx
-        fields = (
-            '__all__'
-        )
-        read_only_field = ('create_user', 'update_user',)
+        fields = '__all__'

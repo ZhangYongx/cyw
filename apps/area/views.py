@@ -22,6 +22,7 @@ class AreaViewset(viewsets.ModelViewSet):
         serializer.is_valid()
         serializer.validated_data['create_user'] = self.request.user
         serializer.validated_data['update_user'] = self.request.user
+        # serializer.validated_data['sn'] = serializer.validated_data['fullname'] + serializer.validated_data['machine_name']
         self.perform_create(serializer)
         return Response(serializer.data)
 
@@ -32,6 +33,7 @@ class AreaViewset(viewsets.ModelViewSet):
         serializer.is_valid()
         serializer.validated_data['create_user'] = self.request.user
         serializer.validated_data['update_user'] = self.request.user
+        # serializer.validated_data['sn'] = serializer.validated_data['fullname'] + serializer.validated_data['machine_name']
         self.perform_update(serializer)
         return Response(serializer.data)
 

@@ -15,6 +15,11 @@ class AliasViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 Alias API
     """
+    # 存放在 POST 方法
+    # if Alias.ip_choice == 0:
+    #     queryset = Alias.objects.defer('start_ip', 'end_ip')
+    # else:
+    #     queryset = Alias.objects.defer('old_ip')
     queryset = Alias.objects.all()
     serializer_class = AliasSerializer
 
