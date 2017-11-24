@@ -23,7 +23,7 @@ class Mx(models.Model):
     class Meta:
         managed = True
         db_table = 'mx'
-        unique_together = ('mxDomain', 'agentid')
+        unique_together = ('mxDomain', 'domain', 'agentid')
 
     def __str__(self):
         return self.domain

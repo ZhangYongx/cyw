@@ -9,7 +9,7 @@ class Local(models.Model):
     """
     Local Table
     """
-    domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="本地域名")
+    domain = models.ForeignKey(SecondDomain, related_name='second_domain', to_field='domain', verbose_name="本地域名")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
@@ -22,5 +22,5 @@ class Local(models.Model):
         managed = True
         db_table = "local"
 
-    def __str__(self):
-        return self.domain
+    # def __str__(self):
+    #     return self.domain

@@ -103,6 +103,9 @@ class UserRegSerializer(serializers.ModelSerializer):
 
 
 class ChangePassWordSerializer(serializers.ModelSerializer):
+    """
+        修改密码
+     """
     username = serializers.CharField(label="用户名", help_text="用户名", required=True, allow_blank=False,
                                      validators=[UniqueValidator(queryset=User.objects.all(), message="用户已经存在")])
     password = serializers.CharField(

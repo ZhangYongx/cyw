@@ -39,14 +39,14 @@ class ServerViewset(viewsets.ModelViewSet):
         if serializer.is_valid() and self.request.query_params.get ('server_method') =='1':
             serializer.validated_data['create_user'] = self.request.user.username
             serializer.validated_data['update_user'] = self.request.user.username
-            serializer.validated_data['nameserver_ip'] = IP(serializer.validated_data['nameserver_ip']).strBin()
+            # serializer.validated_data['nameserver_ip'] = IP(serializer.validated_data['nameserver_ip']).strBin()
             self.perform_create(serializer)
             return Response(serializer.data)
         elif serializer.is_valid() and self.request.query_params.get ('server_method') =='2':
             serializer.validated_data['create_user'] = self.request.user.username
             serializer.validated_data['update_user'] = self.request.user.username
             # serializer.validated_data['reverse_ip'] = (IP(serializer.validated_data['reverse_ip'])).reverseNames()[0]
-            serializer.validated_data['nameserver_ip'] = IP(serializer.validated_data['nameserver_ip']).strBin()
+            # serializer.validated_data['nameserver_ip'] = IP(serializer.validated_data['nameserver_ip']).strBin()
             self.perform_create(serializer)
             return Response(serializer.data)
 
@@ -64,14 +64,14 @@ class ServerViewset(viewsets.ModelViewSet):
         self.perform_update(serializer)
         return Response(serializer.data)
 
-    def retrieve(self, request, *args, **kwargs):
-        """
-            根据Id获取域名解析相关信息，并将二进制IP转换为点分十进制
-        """
-        instance = self.get_object()
-        instance.nameserver_ip = IpReplace(instance.nameserver_ip).bintoip()
-        serializer = self.get_serializer(instance)
-        return Response(serializer.data)
+    # def retrieve(self, request, *args, **kwargs):
+    #     """
+    #         根据Id获取域名解析相关信息，并将二进制IP转换为点分十进制
+    #     """
+    #     instance = self.get_object()
+    #     instance.nameserver_ip = IpReplace(instance.nameserver_ip).bintoip()
+    #     serializer = self.get_serializer(instance)
+    #     return Response(serializer.data)
 
     def get_queryset(self):
 
@@ -82,6 +82,6 @@ class ServerViewset(viewsets.ModelViewSet):
         agentid = self.request.query_params.get('agentid', None)
         if agentid is not None:
             queryset = queryset.filter(agentid=agentid)
-        for i in queryset:
-            i.nameserver_ip = IpReplace(i.nameserver_ip).bintoip()
+        # for i in queryset:
+        #     i.nameserver_ip = IpReplace(i.nameserver_ip).bintoip()
         return queryset

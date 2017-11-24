@@ -11,7 +11,7 @@ class Srv(models.Model):
     """
     domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="域名")
     srv_domain = models.CharField(max_length=45, null=False, verbose_name="服务地址")
-    srv_port = models.IntegerField(verbose_name="端口",blank=True, null=True,default=0)
+    srv_port = models.IntegerField(verbose_name="端口",default=0)
     priority = models.IntegerField(default=10, verbose_name="优先级")
     weight = models.IntegerField(default=10, verbose_name="权重")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")

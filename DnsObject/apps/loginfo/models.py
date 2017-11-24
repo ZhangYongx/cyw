@@ -19,4 +19,4 @@ class Loginfo(models.Model):
 
     class Meta:
         managed = True
-        db_table = "Loginfo"
+        db_table = "loginfo"

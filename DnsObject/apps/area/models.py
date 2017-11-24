@@ -9,7 +9,7 @@ class Area(models.Model):
     """
         区域表
     """
-    agentid = models.ForeignKey(Agent, to_field='agentid', default='1', verbose_name="Agent编号")
+    agentid = models.ForeignKey(Agent, to_field='agentid', verbose_name="Agent编号")
     areaname = models.CharField(max_length=45, verbose_name="区域")
     machine_room = models.CharField(max_length=45, verbose_name="机房名")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
@@ -20,11 +20,11 @@ class Area(models.Model):
     responsible_name = models.ForeignKey(DnsUserProfile, models.DO_NOTHING, verbose_name="负责人",  db_column='responsible_name')
 
     class Meta:
-        # unique_together=('name','fullname','machine_room',)
+        unique_together=('agentid','areaname',)
         verbose_name = '区域'
         verbose_name_plural = verbose_name
         managed = True
         db_table = 'area'
 
     def __str__(self):
-        return self.name
+        return self.areaname
