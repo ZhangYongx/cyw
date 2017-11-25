@@ -11,7 +11,7 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 from utils.permissions import IsOwnerOrReadOnly
-
+from rest_framework import status
 
 class AddressViewsSet(viewsets.ModelViewSet):
 
@@ -40,9 +40,9 @@ class AddressViewsSet(viewsets.ModelViewSet):
         if serializer.is_valid():
             serializer.validated_data['create_user'] = self.request.user.username
             serializer.validated_data['update_user'] = self.request.user.username
-            # serializer.validated_data['addr_ip'] = IP(serializer.validated_data['addr_ip']).strBin()
             self.perform_create(serializer)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
         """
@@ -51,30 +51,19 @@ class AddressViewsSet(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        # serializer.validated_data['addr_ip'] = IP(serializer.validated_data['addr_ip']).strBin()
-        serializer.validated_data['update_user'] = self.request.user.username
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
-    # def retrieve(self, request, *args, **kwargs):
-    #     """
-    #         根据Id获取域名解析相关信息，并将二进制IP转换为点分十进制
-    #     """
-    #     instance = self.get_object()
-    #     instance.addr_ip = IpReplace(instance.addr_ip).bintoip()
-    #     serializer = self.get_serializer(instance)
-    #     return Response(serializer.data)
+        if serializer.is_valid():
+            serializer.validated_data['update_user'] = self.request.user.username
+            self.perform_update(serializer)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
 
         """
-            根据区域id查询，获取相关数据，并将IP由二进制转换为点分十进制
+            根据agentid查询，获取相关数据，并将IP由二进制转换为点分十进制
         """
         queryset = models.Address.objects.all()
         agentid = self.request.query_params.get('agentid', None)
         if agentid is not None:
             queryset = queryset.filter(agentid=agentid)
-        # for i in queryset:
-        #     i.addr_ip = IpReplace(i.addr_ip).bintoip()
         return queryset

@@ -11,6 +11,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 from utils.permissions import IsOwnerOrReadOnly
+from rest_framework import status
 
 
 class IPinfoViewset(viewsets.ModelViewSet):
@@ -33,7 +34,8 @@ class IPinfoViewset(viewsets.ModelViewSet):
             serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['ipaddress']).reverseNames()[0]
             serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
             self.perform_create(serializer)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
         """
@@ -42,12 +44,13 @@ class IPinfoViewset(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['ipaddress']).reverseNames()[0]
-        serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
-        serializer.validated_data['update_user'] = self.request.user.username
-        self.perform_update(serializer)
-        return Response(serializer.data)
+        if serializer.is_valid():
+            serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['ipaddress']).reverseNames()[0]
+            serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
+            serializer.validated_data['update_user'] = self.request.user.username
+            self.perform_update(serializer)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, *args, **kwargs):
         """
@@ -61,7 +64,7 @@ class IPinfoViewset(viewsets.ModelViewSet):
     def get_queryset(self):
 
         """
-            根据区域id查询，获取相关数据，并将IP由二进制转换为点分十进制
+            根据agentid查询，获取相关数据，并将IP由二进制转换为点分十进制
         """
         queryset = IPinfo.objects.all()
         agentid = self.request.query_params.get('agentid', None)

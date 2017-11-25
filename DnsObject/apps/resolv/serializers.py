@@ -15,3 +15,4 @@ class ResolvSerializer(serializers.ModelSerializer):
             '__all__'
         )
         read_only_fields = ('create_user', 'update_user',)
+        extra_kwargs = {'resolv_ip': {'write_only': True}}

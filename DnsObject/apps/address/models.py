@@ -25,6 +25,6 @@ class Address(models.Model):
     class Meta:
         managed = True
         db_table = 'address'
-
+        unique_together=('domain','addr_ip','agentid',)
     def __str__(self):
         return self.domain

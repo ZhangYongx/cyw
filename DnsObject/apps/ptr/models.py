@@ -25,6 +25,3 @@ class Ptr(models.Model):
         db_table = 'ptr'
         unique_together = ('domain', 'agentid')
 
-    # def __str__(self):
-    #     return IP(self.ptr_ip).reverseNames()[0]
-

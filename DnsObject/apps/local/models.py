@@ -21,6 +21,3 @@ class Local(models.Model):
     class Meta:
         managed = True
         db_table = "local"
-
-    # def __str__(self):
-    #     return self.domain

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
+from PublicMethod.ipreplace import IpReplace
 
 
 class Agent(models.Model):
@@ -25,7 +26,9 @@ class Agent(models.Model):
     class Meta:
         managed = True
         db_table = 'agent'
-
+        unique_together = ('agt_ip', 'agt_version', 'agentid')
 
     def __str__(self):
         return self.agentid
+
+

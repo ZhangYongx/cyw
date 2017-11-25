@@ -11,7 +11,7 @@ class Mx(models.Model):
     mail server table
     """
     domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="域名")
-    mxDomain = models.CharField(max_length=45, verbose_name="服务地址")
+    mxDomain = models.CharField(max_length=45, verbose_name="邮箱服务地址")
     priority = models.IntegerField(default=10, verbose_name="权重")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")

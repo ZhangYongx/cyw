@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 from utils.permissions import IsOwnerOrReadOnly
+from rest_framework import status
 
 
 class TopDomainViewset(viewsets.ModelViewSet):
@@ -29,7 +30,8 @@ class TopDomainViewset(viewsets.ModelViewSet):
             serializer.validated_data['create_user'] = self.request.user.username
             serializer.validated_data['update_user'] = self.request.user.username
             self.perform_create(serializer)
-            return Response(serializer.data)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def update(self, request, *args, **kwargs):
         """
@@ -38,8 +40,9 @@ class TopDomainViewset(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        serializer.validated_data['update_user'] = self.request.user.username
-        self.perform_update(serializer)
-        return Response(serializer.data)
+        if serializer.is_valid():
+            serializer.validated_data['update_user'] = self.request.user.username
+            self.perform_update(serializer)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

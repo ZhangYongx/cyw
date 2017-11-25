@@ -113,11 +113,11 @@ class ChangePassWordViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid(raise_exception=True)
-        serializer.validated_data['update_user'] = self.request.user.username
-        self.perform_update(serializer)
-        return Response(serializer.data)
-
+        if serializer.is_valid():
+            serializer.validated_data['update_user'] = self.request.user.username
+            self.perform_update(serializer)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
         """

@@ -25,6 +25,4 @@ class Host(models.Model):
         unique_together = ('host_ip', 'domain', 'agentid')
         db_table = 'host'
 
-    def __str__(self):
-        return IpReplace(self.host_ip_id).bintoip()
 
