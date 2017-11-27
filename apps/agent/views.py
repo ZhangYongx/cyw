@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-
-# Create your views here.
-
 from rest_framework import viewsets
 from rest_framework.response import Response
 from IPy import IP
 from .models import Agent
 from .serializers import AgentSerializer
+from PublicFunc.ip_int_bin import ip_bin2int
 
 
 class AgentViewset(viewsets.ModelViewSet):
@@ -23,9 +21,9 @@ class AgentViewset(viewsets.ModelViewSet):
         生成创建人信息
         """
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid()
+        serializer.is_valid(raise_exception=True)
         serializer.validated_data['create_user'] = self.request.user
-        serializer.validated_data['update_user'] = self.request.user
+        # serializer.validated_data['update_user'] = self.request.user
         serializer.validated_data['agt_ip'] = IP(serializer.validated_data['agt_ip']).strBin()
         self.perform_create(serializer)
         return Response(serializer.data)
@@ -34,9 +32,18 @@ class AgentViewset(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid()
-        serializer.validated_data['create_user'] = self.request.user
+        serializer.is_valid(raise_exception=True)
+        # serializer.validated_data['create_user'] = self.request.user
         serializer.validated_data['update_user'] = self.request.user
         serializer.validated_data['agt_ip'] = IP(serializer.validated_data['agt_ip']).strBin()
         self.perform_update(serializer)
         return Response(serializer.data)
+
+    def get_queryset(self):
+        queryset = Agent.objects.all()
+        agt_id = self.request.query_params.get('agt_id', None)
+        if agt_id is not None:
+            queryset = queryset.filter(agt_id='agt_id')
+        for i in queryset:
+            i.agt_ip = ip_bin2int(i.agt_ip)
+        return queryset

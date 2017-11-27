@@ -2,6 +2,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from agent.models import Agent
 
 # Create your models here.
 
@@ -17,7 +18,8 @@ class Heartbeat(models.Model):
     )
     time = models.IntegerField(unique=True, verbose_name="时间戳")
     state = models.IntegerField(choices=heart_state, default=0, verbose_name="状态")
-    agent_ip = models.GenericIPAddressField(verbose_name="Agent IP")
+    agt_ip = models.ForeignKey(Agent, to_field='agt_ip', verbose_name="Agent IP")
+    # agt_version = models.ForeignKey(Agent, to_field='agt_version', verbose_name="Agent 版本")
     message = models.CharField(max_length=10, blank=True, null=True, verbose_name="信息保留")
 
     class Meta:

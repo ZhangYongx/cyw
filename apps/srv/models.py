@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from seconddomain.models import SecondDomain
-from area.models import Area
+from agent.models import Agent
 
 # Create your models here.
 
@@ -21,13 +21,13 @@ class Srv(models.Model):
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     create_user = models.CharField(max_length=30, editable=False, verbose_name="创建用户")
     update_user = models.CharField(max_length=30, editable=False, verbose_name="更新用户")
-    area_name = models.ForeignKey(Area, to_field='name', verbose_name="区域")
+    agt_id = models.ForeignKey(Agent, to_field='agt_id', verbose_name="Agent编号")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
 
     class Meta:
         # managed = True
         db_table = 'srv'
-        unique_together = ('srv_domain', 'area_name')
+        unique_together = ('srv_domain', 'agt_id')
 
     def __str__(self):
         return self.domain

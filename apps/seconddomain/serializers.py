@@ -11,5 +11,4 @@ class SecondDomainSerializer(AllSerializer):
     class Meta:
         model = SecondDomain
         fields = '__all__'
-        # read_only_field = ('create_user', 'update_user',)
 

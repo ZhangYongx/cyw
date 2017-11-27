@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
-
-# Create your views here.
-
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .models import TopDomain
