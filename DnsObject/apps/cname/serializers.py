@@ -4,6 +4,9 @@ from cname import models
 
 
 class CnameSerializers(serializers.ModelSerializer):
+    """
+    序列化 Models.Cname
+    """
     create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
 

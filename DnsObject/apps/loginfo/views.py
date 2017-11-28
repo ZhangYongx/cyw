@@ -14,3 +14,14 @@ class LoginfoViewset(viewsets.ModelViewSet):
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     queryset = Loginfo.objects.all()
     serializer_class = LoginfoSerializer
+
+
+    def get_queryset(self):
+        """
+            根据agentid查询，获取相关数据
+        """
+        queryset = Loginfo.objects.all()
+        agentid = self.request.query_params.get('agentid', None)
+        if agentid is not None:
+            queryset = queryset.filter(agentid=agentid)
+        return queryset

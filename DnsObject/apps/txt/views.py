@@ -12,7 +12,7 @@ from rest_framework import status
 
 class TxtViewset(viewsets.ModelViewSet):
     """
-    允许用户查看或编辑 Txt API
+        允许用户查看或编辑 Txt API
     """
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)

@@ -5,7 +5,7 @@ from .models import TopDomain
 
 class TopDomainSerializer(serializers.ModelSerializer):
     """
-    Serializer Models.Domain
+    Serializer Models.TopDomain
     """
     create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)

@@ -5,7 +5,7 @@ from ipinfo.models import IPinfo
 
 class IPinfoSerializer(serializers.ModelSerializer):
     """
-    Serializer Models.IP
+    Serializer Models.Ipinfo
     """
     create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)

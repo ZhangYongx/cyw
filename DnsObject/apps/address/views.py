@@ -17,7 +17,7 @@ class AddressViewsSet(viewsets.ModelViewSet):
 
     """
         list:
-            域名解析相关信息
+            全部信息
         retrieve:
             查询某条信息
         create:

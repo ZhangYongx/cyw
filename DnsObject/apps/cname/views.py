@@ -44,7 +44,6 @@ class CnameViewSet(viewsets.ModelViewSet):
 
 
     def get_queryset(self):
-
         """
             根据agentid查询，获取相关数据
         """

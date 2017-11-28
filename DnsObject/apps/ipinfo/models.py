@@ -8,7 +8,8 @@ class IPinfo(models.Model):
     """
     ip table
     """
-    ipaddress = models.GenericIPAddressField(blank=False, null=False, unique=True, verbose_name="IP")
+    ipaddress = models.GenericIPAddressField(blank=False, null=False, unique=True,
+                                             verbose_name="IP", help_text="请输入IP地址")
     reverse_ip=models.CharField(max_length=30,unique=True)
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")

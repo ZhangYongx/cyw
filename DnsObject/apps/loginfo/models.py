@@ -9,8 +9,8 @@ class Loginfo(models.Model):
     """
     log_state = (
         (0, '正常'),
-        (1, '错误'),
-        (2, 'unknown'),
+        (1, '告警'),
+        (2, '错误'),
     )
     time = models.IntegerField(verbose_name="时间戳")
     state = models.IntegerField(choices=log_state, default=0, verbose_name="状态")

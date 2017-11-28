@@ -13,7 +13,7 @@ from rest_framework import status
 
 class TopDomainViewset(viewsets.ModelViewSet):
     """
-    允许用户查看或编辑 Domain API
+        允许用户查看或编辑 Domain API
     """
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)

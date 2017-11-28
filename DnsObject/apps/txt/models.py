@@ -7,7 +7,7 @@ from seconddomain.models import SecondDomain
 
 class Txt(models.Model):
     """
-    TXT table
+        TXT table
     """
     domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="域名")
     text = models.TextField(max_length=45, verbose_name="TEXT")

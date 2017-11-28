@@ -5,7 +5,7 @@ from .models import Server
 
 class ServerSerializer(serializers.ModelSerializer):
     """
-    序列化 Models.Server
+        序列化 Models.Server
     """
     create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
@@ -20,7 +20,7 @@ class ServerSerializer(serializers.ModelSerializer):
 
 class ServerSerializer1(serializers.ModelSerializer):
     """
-    序列化 Models.Server
+        序列化 Models.Server1
     """
     create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
@@ -43,7 +43,7 @@ class ServerSerializer1(serializers.ModelSerializer):
 
 class ServerSerializer2(serializers.ModelSerializer):
     """
-    序列化 Models.Server
+        序列化 Models.Server2
     """
     create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)

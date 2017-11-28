@@ -7,7 +7,7 @@ from agent.models import Agent
 
 class Srv(models.Model):
     """
-    SRV Table
+        SRV Table
     """
     domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="域名")
     srv_domain = models.CharField(max_length=45, null=False, verbose_name="服务地址")

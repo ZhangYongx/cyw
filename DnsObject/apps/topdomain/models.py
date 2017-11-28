@@ -4,7 +4,7 @@ from django.db import models
 
 class TopDomain(models.Model):
     """
-    顶级域名
+        顶级域名
     """
     top_domain = models.CharField(max_length=45, unique=True, verbose_name="顶级域名")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")

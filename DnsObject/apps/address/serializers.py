@@ -6,9 +6,8 @@ from address import models
 
 class AddressSerializer(serializers.ModelSerializer):
     """
-        域名解析信息
+    序列化 Models.Address
     """
-    #外键关联
     create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     ip = serializers.IPAddressField(source='addr_ip', read_only=True)

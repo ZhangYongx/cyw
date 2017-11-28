@@ -46,7 +46,6 @@ class PtrViewset(viewsets.ModelViewSet):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def get_queryset(self):
-
         """
             根据agentid查询，获取相关数据
         """

@@ -13,8 +13,8 @@ from rest_framework import permissions
 from rest_framework import mixins
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-from utils.permissions import IsOwnerOrReadOnly
-from django.contrib.auth import authenticate
+from users.permissions import IsOwnerOrReadOnly
+
 User = get_user_model()
 
 
@@ -37,7 +37,7 @@ class CustomBackend(ModelBackend):
             return None
 
 
-class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class UserViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     retrieve：
         用户详情
@@ -69,7 +69,7 @@ class UserViewSet(mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.Retri
         if self.action == "retrieve":
             return [permissions.IsAuthenticated()]
         # if self.action == "list":
-        #     return [permissions.IsAuthenticatedOrReadOnly()]
+        #     return [IsOwnerOrReadOnly()]
         elif self.action == "create":
             return []
 
@@ -104,7 +104,7 @@ class ChangePassWordViewSet(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, 
 
     serializer_class = serializers.ChangePassWordSerializer
     authentication_classes = (JSONWebTokenAuthentication, authentication.SessionAuthentication)
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (IsAuthenticated,IsOwnerOrReadOnly)
 
     def update(self, request, *args, **kwargs):
         """

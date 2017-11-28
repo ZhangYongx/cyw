@@ -14,3 +14,14 @@ class HeartBeatViewSet(viewsets.ModelViewSet):
     queryset = Heartbeat.objects.all()
     serializer_class = HeartbeatSerializer
 
+
+    def get_queryset(self):
+        """
+            根据agentid查询，获取相关数据
+        """
+        queryset = Heartbeat.objects.all()
+        agentid = self.request.query_params.get('agentid', None)
+        if agentid is not None:
+            queryset = queryset.filter(agentid=agentid)
+        return queryset
+

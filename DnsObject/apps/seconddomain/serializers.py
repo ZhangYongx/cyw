@@ -4,6 +4,9 @@ from seconddomain.models import SecondDomain
 
 
 class SecondDomainSerializer(serializers.ModelSerializer):
+    """
+        Serializer Models.SecondDomain
+     """
     create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
 

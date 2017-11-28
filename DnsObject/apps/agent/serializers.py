@@ -3,6 +3,9 @@ from rest_framework import serializers
 from agent.models import Agent
 
 class AgentSerializer(serializers.ModelSerializer):
+    """
+    序列化 Models.Agent
+    """
     create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
 

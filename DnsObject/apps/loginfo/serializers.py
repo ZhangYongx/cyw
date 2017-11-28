@@ -4,6 +4,9 @@ from .models import Loginfo
 
 
 class LoginfoSerializer(serializers.ModelSerializer):
+    """
+    序列化 Models.Loginfo
+    """
     class Meta:
         model = Loginfo
         fields = (

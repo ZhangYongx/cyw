@@ -4,7 +4,7 @@ from .models import Resolv
 
 class ResolvSerializer(serializers.ModelSerializer):
     """
-    Serializer Models.Resolv
+        Serializer Models.Resolv
     """
     create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)

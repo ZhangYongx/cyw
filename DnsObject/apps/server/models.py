@@ -8,13 +8,13 @@ from ipinfo.models import IPinfo
 
 class Server(models.Model):
     """
-    Server Table
+        Server Table
     """
     domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="域名", blank=True, null=True)
     namereverse_ip = models.ForeignKey(IPinfo,related_name='ipinfo_reverse_ip',to_field='reverse_ip',
                                        verbose_name="反向IP", blank=True, null=True)
     nameserver_ip = models.ForeignKey(IPinfo, related_name='ipinfo_ip',to_field='ipaddress', blank=True, null=True,
-                                      verbose_name="NS IP", help_text="请输入域名服务器的IP")
+                                      verbose_name="NS IP", help_text="请选择域名服务器的IP")
     nameserver_port = models.IntegerField(default=53, verbose_name="NS PORT", help_text="请输入域名服务器的端口")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")

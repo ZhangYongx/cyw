@@ -92,7 +92,6 @@ class AliasViewset(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def get_queryset(self):
-
         """
             根据agentid查询，获取相关数据，并将IP由二进制转换为点分十进制
         """
