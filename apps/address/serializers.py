@@ -11,7 +11,7 @@ class AddressSerializer(AllSerializer):
     序列化 Models.Address
     """
     # 在序列化层 对字段进行再操作，为 addr_ip 取一个别名
-    ipaddress = serializers.IPAddressField(source='addr_ip', read_only=True)
+    ip = serializers.IPAddressField(source='addr_ip', read_only=True)
 
     class Meta:
         model = Address

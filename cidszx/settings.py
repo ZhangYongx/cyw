@@ -18,7 +18,13 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
-# print("sys.path:" + sys.path.__str__())
+
+# solve the Error: could not found DJANGO_SETTINGS_MODULE
+# path = 'D:\\pyProject\\cidszx\\cidszx'
+# if path not in sys.path:
+#     sys.path.append(path)
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "cidszx.settings")
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/

@@ -12,8 +12,8 @@ class Cname(models.Model):
     """
     Cname Table
     """
-    cname = models.CharField(max_length=100, verbose_name="别名")
-    domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="域名")
+    cname = models.CharField(unique=True, max_length=100, verbose_name="别名")
+    domain = models.ForeignKey(SecondDomain, to_field='domain',verbose_name="域名")
     ttl = models.IntegerField(default=10, verbose_name="TTL")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
@@ -25,6 +25,8 @@ class Cname(models.Model):
     class Meta:
         # managed = True
         db_table = 'cname'
+        verbose_name = '别名'
+        verbose_name_plural = verbose_name
         unique_together = ('cname', 'agt_id')
 
     def __str__(self):

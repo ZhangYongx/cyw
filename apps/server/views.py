@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
-
+from PublicFunc.ip_int_bin import ip_bin2int
+from rest_framework import status
 # Create your views here.
 
 from rest_framework import viewsets
@@ -20,24 +20,41 @@ class ServerViewset(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
-        serializer.is_valid()
-        serializer.validated_data['create_user'] = self.request.user
-        serializer.validated_data['update_user'] = self.request.user
-        serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['reverse_ip']).strBin()
-        serializer.validated_data['nameserver_ip'] = IP(serializer.validated_data['nameserver_ip']).strBin()
-        self.perform_create(serializer)
+        if serializer.is_valid():
+            serializer.validated_data['create_user'] = self.request.user.username
+            serializer.validated_data['update_user'] = self.request.user.username
+            serializer.validated_data['nameserver_ip'] = IP(serializer.validated_data['nameserver_ip']).strBin()
+            self.perform_create(serializer)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        instance.nameserver_ip = ip_bin2int(instance.nameserver_ip)
+        serializer = self.get_serializer(instance)
         return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid()
-        serializer.validated_data['create_user'] = self.request.user
-        serializer.validated_data['update_user'] = self.request.user
-        serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['reverse_ip']).strBin()
-        serializer.validated_data['nameserver_ip'] = IP(serializer.validated_data['nameserver_ip']).strBin()
-        self.perform_update(serializer)
-        return Response(serializer.data)
+        if serializer.is_valid():
+            serializer.validated_data['update_user'] = self.request.user.username
+            serializer.validated_data['nameserver_ip'] = IP(serializer.validated_data['nameserver_ip']).strBin()
+            self.perform_update(serializer)
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def get_queryset(self):
+        """
+        把 ipaddress 从二进制转换为十进制，之后传递给 serializer;
+        可根据"区域id" 查询 ipaddress;
+        """
+        queryset = Server.objects.all()
+        agt_id = self.request.query_params.get('agt_id', None)
+        if agt_id:
+            queryset = queryset.filter(agt_id=agt_id)
+        for i in queryset:
+            i.nameserver_ip = ip_bin2int(i.nameserver_ip)
+        return queryset
 

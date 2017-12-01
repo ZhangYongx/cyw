@@ -12,9 +12,9 @@ class Alias(models.Model):
     Alias Table
     """
     ip_choice = models.IntegerField(choices=((0, '单个IP'), (1, 'IP地址段'),), default=0, verbose_name='IP选择')
-    old_ip = models.GenericIPAddressField(blank=True, null=True, verbose_name="原IP")
-    start_ip = models.GenericIPAddressField(blank=True, null=True, verbose_name="起始IP")
-    end_ip = models.GenericIPAddressField(blank=True, null=True, verbose_name="结束IP")
+    old_ip = models.GenericIPAddressField(default="", blank=True, null=True, verbose_name="原IP")
+    start_ip = models.GenericIPAddressField(default="", blank=True, null=True, verbose_name="起始IP")
+    end_ip = models.GenericIPAddressField(default="", blank=True, null=True, verbose_name="结束IP")
     new_ip = models.GenericIPAddressField(verbose_name="新IP")
     ipmask = models.GenericIPAddressField(verbose_name="掩码")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
@@ -22,7 +22,7 @@ class Alias(models.Model):
     create_user = models.CharField(max_length=30, editable=False, verbose_name="创建用户")
     update_user = models.CharField(max_length=30, editable=False, verbose_name="更新用户")
     agt_id = models.ForeignKey(Agent, to_field='agt_id', verbose_name="Agent编号")
-    remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
+    remarks = models.CharField(default="", max_length=45, blank=True, null=True, verbose_name="备注")
 
     class Meta:
         # managed = True

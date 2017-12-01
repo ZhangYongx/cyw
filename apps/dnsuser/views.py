@@ -13,7 +13,6 @@ class DNSUserViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 UserTable API
     """
-    # createTime = models.DateTimeField(auto_created=True)
     queryset = DNSUser.objects.all()
     serializer_class = DNSUserSerializer
 
@@ -28,7 +27,7 @@ class DNSUserViewset(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        serializer.is_valid()
-        serializer.validated_data['create_user'] = self.request.user
-        self.perform_update(serializer)
-        return Response(serializer.data)
+        if serializer.is_valid():
+            serializer.validated_data['update_user'] = self.request.user.username
+            self.perform_update(serializer)
+            return Response(serializer.data)

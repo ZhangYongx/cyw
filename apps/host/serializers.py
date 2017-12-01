@@ -9,7 +9,7 @@ class HostSerializer(AllSerializer):
     """
     序列化 Models.HostRecord
     """
-    ipaddress = serializers.IPAddressField(source='host_ip', read_only=True)
+    ip = serializers.IPAddressField(source='host_ip', read_only=True)
 
     class Meta:
         model = Host
