@@ -63,6 +63,7 @@ router.register(r'Heartbeat', HeartbeatViewset)
 
 urlpatterns = [
     url(r'^dns/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'dns', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^admin/', admin.site.urls),
 ]
