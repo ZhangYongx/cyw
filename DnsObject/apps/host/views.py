@@ -13,7 +13,7 @@ from rest_framework.authentication import SessionAuthentication
 from utils.permissions import IsOwnerOrReadOnly
 from rest_framework import status
 
-class HostViewset(mixins.CreateModelMixin,mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class HostViewset(mixins.CreateModelMixin, mixins.DestroyModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
     """
     允许用户查看或编辑 HostRecord API
     """

@@ -15,6 +15,7 @@ class Agent(models.Model):
     )
     agt_ip = models.CharField(unique=True, max_length=39, verbose_name="Agent IP")
     agentid = models.CharField(unique=True, max_length=45, verbose_name="Agent编号")
+    token = models.CharField(blank=True, null= True, max_length=100, verbose_name="Token")
     agt_version = models.CharField(max_length=5, verbose_name="版本")
     agt_state = models.IntegerField(choices=Agent_Status,verbose_name="状态")
     create_time = models.DateTimeField(auto_now_add=True,verbose_name="创建时间")

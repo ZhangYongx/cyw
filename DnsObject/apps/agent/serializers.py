@@ -15,4 +15,4 @@ class AgentSerializer(serializers.ModelSerializer):
 
             '__all__'
         )
-        read_only_fields = ('create_user', 'update_user',)
+        read_only_fields = ('create_user', 'update_user','token',)

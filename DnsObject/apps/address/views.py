@@ -35,7 +35,7 @@ class AddressViewsSet(viewsets.ModelViewSet):
     def create(self, request, *args, **kwargs):
         """
             添加信息，创建者和修改者默认为当前用户。IP转换为二进制存储
-         """
+        """
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
             serializer.validated_data['create_user'] = self.request.user.username

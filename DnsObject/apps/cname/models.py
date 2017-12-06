@@ -6,7 +6,7 @@ from seconddomain.models import SecondDomain
 
 
 class Cname(models.Model):
-    cname = models.CharField(unique=True, max_length=45, verbose_name="别名")
+    cname = models.CharField(max_length=45, verbose_name="别名")
     domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="二级域名")
     ttl = models.SmallIntegerField(default=600, verbose_name="生命周期")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
@@ -20,7 +20,9 @@ class Cname(models.Model):
         verbose_name = '别名'
         verbose_name_plural = verbose_name
         managed = True
+        unique_together = ('agentid','cname', 'domain')
         db_table = 'cname'
+
 
     def __str__(self):
         return self.cname

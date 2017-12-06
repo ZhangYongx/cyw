@@ -16,7 +16,6 @@ import sys
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, BASE_DIR)
 sys.path.insert(0, os.path.join(BASE_DIR, 'apps'))
-# sys.path.insert(0, os.path.join(BASE_DIR, 'apps/PublicMethod'))
 
 SECRET_KEY = '9$w^(3(6!!p@077ol38s#x*!8%%@o8=kq0a4#*qp6a_(s5apan'
 
@@ -137,15 +136,18 @@ USE_TZ = False  #默认是Ture，时间是utc时间，由于我们要用本地�
 
 #引入REST_FRAMEWORK
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
-    ],
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         # 'rest_framework_jwt.authentication.JSONWebTokenAuthentication'
     ),
 }
+
+
+# REST_FRAMEWORK_TOKEN_EXPIRE_MINUTES = 60
 
 #JWT认证，token过期时间
 import datetime

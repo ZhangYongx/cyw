@@ -24,6 +24,8 @@ from heartbeat.views import HeartBeatViewSet
 from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token
 from agent.views import AgentViewSet
+from rest_framework_jwt.views import refresh_jwt_token
+#from .views import obtain_expiring_auth_token
 
 #注册路由
 router = DefaultRouter()
@@ -49,7 +51,6 @@ router.register(r'topdomain', TopDomainViewset, base_name='topdoamin')
 router.register(r'txt', TxtViewset, base_name='txt')
 
 
-
 urlpatterns = [
 
     #url路由
@@ -68,7 +69,12 @@ urlpatterns = [
     url(r'^docs/', include_docs_urls(title='DNS管理系统')),
 
     #jwt的认证接口
-    url(r'^login/', obtain_jwt_token),
+    url(r'^api_token_register/', obtain_jwt_token),
 
-    # url(r'^changepwd/$', login_required(changepawword.changepwd), name="changepwd"),
+    #自定义获取Token
+    # url(r'^api/token/', obtain_expiring_auth_token, name='api-token'),
+
+    #刷新jwt
+    url(r'^api-token-refresh/', refresh_jwt_token),
+
 ]

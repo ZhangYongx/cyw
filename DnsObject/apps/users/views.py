@@ -37,7 +37,7 @@ class CustomBackend(ModelBackend):
             return None
 
 
-class UserViewSet(mixins.ListModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+class UserViewSet(mixins.ListModelMixin,mixins.DestroyModelMixin, mixins.CreateModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     """
     retrieve：
         用户详情

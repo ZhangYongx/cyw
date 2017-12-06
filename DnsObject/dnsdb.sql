@@ -10,13 +10,13 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2017-11-25 16:36:36
+Date: 2017-12-06 15:46:37
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for `address`
+-- Table structure for address
 -- ----------------------------
 DROP TABLE IF EXISTS `address`;
 CREATE TABLE `address` (
@@ -33,19 +33,18 @@ CREATE TABLE `address` (
   KEY `address_addr_ip_id_13ecfd66_fk_ipinfo_ipaddress` (`addr_ip_id`),
   KEY `address_agentid_id_a2d88f46_fk_agent_agentid` (`agentid_id`),
   KEY `address_domain_id_d9beb7d8_fk_second_domain_domain` (`domain_id`),
-  CONSTRAINT `address_domain_id_d9beb7d8_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`),
   CONSTRAINT `address_addr_ip_id_13ecfd66_fk_ipinfo_ipaddress` FOREIGN KEY (`addr_ip_id`) REFERENCES `ipinfo` (`ipaddress`),
-  CONSTRAINT `address_agentid_id_a2d88f46_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  CONSTRAINT `address_agentid_id_a2d88f46_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
+  CONSTRAINT `address_domain_id_d9beb7d8_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of address
 -- ----------------------------
 INSERT INTO `address` VALUES ('1', '2017-11-25 15:53:33', '2017-11-25 15:53:33', 'admin', 'admin', '', '11010011000010110000111010101011', 'HK171125', 'tiejiang.org');
-INSERT INTO `address` VALUES ('3', '2017-11-25 15:55:36', '2017-11-25 15:55:36', 'admin', 'admin', '', '11010011000010110000111010101011', 'CN-BJ171125', 'chuyiwei.com');
 
 -- ----------------------------
--- Table structure for `agent`
+-- Table structure for agent
 -- ----------------------------
 DROP TABLE IF EXISTS `agent`;
 CREATE TABLE `agent` (
@@ -59,21 +58,21 @@ CREATE TABLE `agent` (
   `create_user` varchar(30) NOT NULL,
   `update_user` varchar(30) NOT NULL,
   `remarks` varchar(45) DEFAULT NULL,
+  `token` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `agt_ip` (`agt_ip`),
   UNIQUE KEY `agentid` (`agentid`),
   UNIQUE KEY `agent_agt_ip_agt_version_agentid_5a484843_uniq` (`agt_ip`,`agt_version`,`agentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of agent
 -- ----------------------------
-INSERT INTO `agent` VALUES ('1', '11000000101010000000001001100101', 'HK171125', '1.0.1', '0', '2017-11-25 10:37:05', '2017-11-25 10:37:05', 'admin', 'admin', '');
-INSERT INTO `agent` VALUES ('2', '11000011011100001010110011100000', 'USA171125', '1.0.1', '0', '2017-11-25 10:39:33', '2017-11-25 10:39:33', 'admin', 'admin', '');
-INSERT INTO `agent` VALUES ('3', '01111011011111010100011100100110', 'CN-BJ171125', '1.0.1', '0', '2017-11-25 10:39:59', '2017-11-25 10:39:59', 'admin', 'admin', '');
+INSERT INTO `agent` VALUES ('1', '11000000101010000000001001100101', 'HK171125', '1.0.1', '0', '2017-11-25 10:37:05', '2017-11-25 10:37:05', 'admin', 'admin', '', null);
+INSERT INTO `agent` VALUES ('2', '11000011011100001010110011100000', 'USA171125', '1.0.1', '0', '2017-11-25 10:39:33', '2017-11-25 10:39:33', 'admin', 'admin', '', null);
 
 -- ----------------------------
--- Table structure for `alias`
+-- Table structure for alias
 -- ----------------------------
 DROP TABLE IF EXISTS `alias`;
 CREATE TABLE `alias` (
@@ -93,17 +92,15 @@ CREATE TABLE `alias` (
   UNIQUE KEY `alias_new_ip_agentid_id_e0e393c8_uniq` (`new_ip`,`agentid_id`),
   KEY `alias_agentid_id_d2b88179_fk_agent_agentid` (`agentid_id`),
   CONSTRAINT `alias_agentid_id_d2b88179_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of alias
 -- ----------------------------
-INSERT INTO `alias` VALUES ('1', null, '11000000101010000000101001100100', '11000000101010000000101011001000', '11000000101010000000101001110000', null, '2017-11-25 11:24:22', '2017-11-25 11:24:22', 'admin', 'admin', '', 'CN-BJ171125');
 INSERT INTO `alias` VALUES ('2', null, '11001010000111101111011001100100', '11001010000111101111011011001000', '11001010000111101111011001111010', null, '2017-11-25 11:24:55', '2017-11-25 11:24:55', 'admin', 'admin', '', 'HK171125');
-INSERT INTO `alias` VALUES ('3', '11000000101010000000000100000001', null, null, '11000000101010000000000101110000', null, '2017-11-25 16:31:31', '2017-11-25 16:31:31', 'admin', 'admin', '', 'CN-BJ171125');
 
 -- ----------------------------
--- Table structure for `area`
+-- Table structure for area
 -- ----------------------------
 DROP TABLE IF EXISTS `area`;
 CREATE TABLE `area` (
@@ -120,19 +117,18 @@ CREATE TABLE `area` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `area_agentid_id_areaname_cdc72845_uniq` (`agentid_id`,`areaname`),
   KEY `area_responsible_name_ccf6c7d8_fk_dnsuser_id` (`responsible_name`),
-  CONSTRAINT `area_responsible_name_ccf6c7d8_fk_dnsuser_id` FOREIGN KEY (`responsible_name`) REFERENCES `dnsuser` (`id`),
-  CONSTRAINT `area_agentid_id_2e5c3dae_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  CONSTRAINT `area_agentid_id_2e5c3dae_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
+  CONSTRAINT `area_responsible_name_ccf6c7d8_fk_dnsuser_id` FOREIGN KEY (`responsible_name`) REFERENCES `dnsuser` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of area
 -- ----------------------------
 INSERT INTO `area` VALUES ('1', '香港', '中信机房', '2017-11-25 10:42:13', '2017-11-25 10:42:13', 'admin', 'admin', '', 'HK171125', '1');
 INSERT INTO `area` VALUES ('2', '美国', '硅谷', '2017-11-25 10:43:20', '2017-11-25 10:43:20', 'admin', 'admin', '', 'USA171125', '1');
-INSERT INTO `area` VALUES ('3', '中国', '北京.亦庄', '2017-11-25 10:44:44', '2017-11-25 10:44:44', 'admin', 'admin', '', 'CN-BJ171125', '1');
 
 -- ----------------------------
--- Table structure for `authtoken_token`
+-- Table structure for authtoken_token
 -- ----------------------------
 DROP TABLE IF EXISTS `authtoken_token`;
 CREATE TABLE `authtoken_token` (
@@ -149,7 +145,7 @@ CREATE TABLE `authtoken_token` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_group`
+-- Table structure for auth_group
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_group`;
 CREATE TABLE `auth_group` (
@@ -164,7 +160,7 @@ CREATE TABLE `auth_group` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_group_permissions`
+-- Table structure for auth_group_permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_group_permissions`;
 CREATE TABLE `auth_group_permissions` (
@@ -174,8 +170,8 @@ CREATE TABLE `auth_group_permissions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
   KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -183,7 +179,7 @@ CREATE TABLE `auth_group_permissions` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `auth_permission`
+-- Table structure for auth_permission
 -- ----------------------------
 DROP TABLE IF EXISTS `auth_permission`;
 CREATE TABLE `auth_permission` (
@@ -276,7 +272,7 @@ INSERT INTO `auth_permission` VALUES ('74', 'Can change Token', '25', 'change_to
 INSERT INTO `auth_permission` VALUES ('75', 'Can delete Token', '25', 'delete_token');
 
 -- ----------------------------
--- Table structure for `cname`
+-- Table structure for cname
 -- ----------------------------
 DROP TABLE IF EXISTS `cname`;
 CREATE TABLE `cname` (
@@ -291,21 +287,20 @@ CREATE TABLE `cname` (
   `agentid_id` varchar(45) NOT NULL,
   `domain_id` varchar(45) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `cname` (`cname`),
+  UNIQUE KEY `cname_cname_domain_id_569c701a_uniq` (`cname`,`domain_id`),
   KEY `cname_agentid_id_8fb0087f_fk_agent_agentid` (`agentid_id`),
   KEY `cname_domain_id_48400291_fk_second_domain_domain` (`domain_id`),
-  CONSTRAINT `cname_domain_id_48400291_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`),
-  CONSTRAINT `cname_agentid_id_8fb0087f_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  CONSTRAINT `cname_agentid_id_8fb0087f_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
+  CONSTRAINT `cname_domain_id_48400291_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of cname
 -- ----------------------------
-INSERT INTO `cname` VALUES ('1', '15823.cywcdn.com', '600', '2017-11-25 16:30:12', '2017-11-25 16:30:12', 'admin', 'admin', '', 'HK171125', 'chuyiwei.com');
-INSERT INTO `cname` VALUES ('2', 'ytj.cywcc.com', '600', '2017-11-25 16:30:29', '2017-11-25 16:30:29', 'admin', 'admin', '', 'CN-BJ171125', 'haojob.cn');
+INSERT INTO `cname` VALUES ('1', '111.fdff.com', '600', '2017-11-25 16:30:12', '2017-11-28 11:21:11', 'admin', 'admin', '', 'HK171125', 'chuyiwei.com');
 
 -- ----------------------------
--- Table structure for `django_admin_log`
+-- Table structure for django_admin_log
 -- ----------------------------
 DROP TABLE IF EXISTS `django_admin_log`;
 CREATE TABLE `django_admin_log` (
@@ -320,8 +315,8 @@ CREATE TABLE `django_admin_log` (
   PRIMARY KEY (`id`),
   KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
   KEY `django_admin_log_user_id_c564eba6_fk_dnsuser_id` (`user_id`),
-  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_dnsuser_id` FOREIGN KEY (`user_id`) REFERENCES `dnsuser` (`id`),
-  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_dnsuser_id` FOREIGN KEY (`user_id`) REFERENCES `dnsuser` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -329,7 +324,7 @@ CREATE TABLE `django_admin_log` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `django_content_type`
+-- Table structure for django_content_type
 -- ----------------------------
 DROP TABLE IF EXISTS `django_content_type`;
 CREATE TABLE `django_content_type` (
@@ -370,7 +365,7 @@ INSERT INTO `django_content_type` VALUES ('24', 'txt', 'txt');
 INSERT INTO `django_content_type` VALUES ('8', 'users', 'dnsuserprofile');
 
 -- ----------------------------
--- Table structure for `django_migrations`
+-- Table structure for django_migrations
 -- ----------------------------
 DROP TABLE IF EXISTS `django_migrations`;
 CREATE TABLE `django_migrations` (
@@ -379,7 +374,7 @@ CREATE TABLE `django_migrations` (
   `name` varchar(255) NOT NULL,
   `applied` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of django_migrations
@@ -418,9 +413,11 @@ INSERT INTO `django_migrations` VALUES ('31', 'sessions', '0001_initial', '2017-
 INSERT INTO `django_migrations` VALUES ('32', 'srv', '0001_initial', '2017-11-25 10:01:59');
 INSERT INTO `django_migrations` VALUES ('33', 'topdomain', '0001_initial', '2017-11-25 10:01:59');
 INSERT INTO `django_migrations` VALUES ('34', 'txt', '0001_initial', '2017-11-25 10:02:00');
+INSERT INTO `django_migrations` VALUES ('35', 'cname', '0002_auto_20171128_1124', '2017-11-28 11:24:27');
+INSERT INTO `django_migrations` VALUES ('36', 'agent', '0002_agent_token', '2017-11-29 13:14:59');
 
 -- ----------------------------
--- Table structure for `django_session`
+-- Table structure for django_session
 -- ----------------------------
 DROP TABLE IF EXISTS `django_session`;
 CREATE TABLE `django_session` (
@@ -434,10 +431,10 @@ CREATE TABLE `django_session` (
 -- ----------------------------
 -- Records of django_session
 -- ----------------------------
-INSERT INTO `django_session` VALUES ('0toanes13fd4mbypaof5t2pcopfbausp', 'YTM5NzZhYjZjYzlhZDY4YzUxM2ViMWY4YjE4ODRhYTdhNzU5NDM5MTp7Il9hdXRoX3VzZXJfaGFzaCI6ImU0NjRjMzNjY2M4YmFjOTdmZjUyYmZhNzAwYjUwOGJjMDBlMzM1MDUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJ1c2Vycy52aWV3cy5DdXN0b21CYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjEifQ==', '2017-12-09 10:25:43');
+INSERT INTO `django_session` VALUES ('uhwv18kh0udhszsim1jf77jun9xt5tyd', 'YTM5NzZhYjZjYzlhZDY4YzUxM2ViMWY4YjE4ODRhYTdhNzU5NDM5MTp7Il9hdXRoX3VzZXJfaGFzaCI6ImU0NjRjMzNjY2M4YmFjOTdmZjUyYmZhNzAwYjUwOGJjMDBlMzM1MDUiLCJfYXV0aF91c2VyX2JhY2tlbmQiOiJ1c2Vycy52aWV3cy5DdXN0b21CYWNrZW5kIiwiX2F1dGhfdXNlcl9pZCI6IjEifQ==', '2017-12-14 15:18:16');
 
 -- ----------------------------
--- Table structure for `dnsuser`
+-- Table structure for dnsuser
 -- ----------------------------
 DROP TABLE IF EXISTS `dnsuser`;
 CREATE TABLE `dnsuser` (
@@ -462,16 +459,20 @@ CREATE TABLE `dnsuser` (
   `remarks` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of dnsuser
 -- ----------------------------
-INSERT INTO `dnsuser` VALUES ('1', 'pbkdf2_sha256$36000$Ni6BGrtKeQio$oy1KVlVaRJ7wLjw7AHRtlPJru8WjmVC61YWU9h1wOY0=', '2017-11-25 10:25:43', '0', 'admin', '', '', '584071227@qq.com', '0', '1', '2017-11-25 10:25:38', null, null, '15821111719', '2017-11-25 10:25:38', '2017-11-25 10:25:38', '1', '', null);
+INSERT INTO `dnsuser` VALUES ('1', 'pbkdf2_sha256$36000$Ni6BGrtKeQio$oy1KVlVaRJ7wLjw7AHRtlPJru8WjmVC61YWU9h1wOY0=', '2017-11-30 15:18:15', '0', 'admin', '', '', '584071227@qq.com', '0', '1', '2017-11-25 10:25:38', null, null, '15821111719', '2017-11-25 10:25:38', '2017-11-25 10:25:38', '1', '', null);
 INSERT INTO `dnsuser` VALUES ('2', 'pbkdf2_sha256$36000$s5Q6mEXYLDaS$qZrSMj6aAv3UICWJ2pzqQsfeRkdn2OdG8OrvkvK8eys=', null, '0', 'chuyiwei', '', '', 'df829475@163.com', '0', '1', '2017-11-25 10:46:35', null, null, '15821111718', '2017-11-25 10:46:35', '2017-11-25 10:46:35', '1', '', null);
+INSERT INTO `dnsuser` VALUES ('3', 'pbkdf2_sha256$36000$EYbs6FlFbsmu$ONKecMCn6CatjCU1sHkiOEwyeBySGPA678ZsfW88050=', null, '1', 'dufei', '', '', '', '1', '1', '2017-11-27 13:27:58', null, null, '', '2017-11-27 13:27:59', '2017-11-27 13:27:59', '1', '', null);
+INSERT INTO `dnsuser` VALUES ('4', 'pbkdf2_sha256$36000$1CFcpoftHrOv$j5KF6rdUjqXpXK+/OO2kXC5tphHLuiG2c5m6sLxAsgE=', null, '0', '111', '', '', '18621609334@qq.com', '0', '1', '2017-11-29 11:31:55', null, null, '15821111712', '2017-11-29 11:31:55', '2017-11-29 11:31:55', '1', '', null);
+INSERT INTO `dnsuser` VALUES ('5', 'pbkdf2_sha256$36000$GzVLzbWqprWD$jKxfXtofhpb6g0239gt2966gTkxWNdms4Bkwc4nNT+M=', null, '0', '2222', '', '', '584071226@qq.com', '0', '1', '2017-11-30 13:37:07', null, null, '15821111713', '2017-11-30 13:37:07', '2017-11-30 13:37:07', '1', '', null);
+INSERT INTO `dnsuser` VALUES ('6', 'pbkdf2_sha256$36000$Hmf4IysAtBA5$2RYYe2X61ZlAI/dZYKo17nz+HYtBxoprkjz0hxiVMIA=', null, '0', '3333', '', '', '584071223@qq.com', '0', '1', '2017-11-30 14:31:39', null, null, '15821211719', '2017-11-30 14:31:39', '2017-11-30 14:31:39', '1', '', null);
 
 -- ----------------------------
--- Table structure for `dnsuser_groups`
+-- Table structure for dnsuser_groups
 -- ----------------------------
 DROP TABLE IF EXISTS `dnsuser_groups`;
 CREATE TABLE `dnsuser_groups` (
@@ -481,8 +482,8 @@ CREATE TABLE `dnsuser_groups` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `dnsuser_groups_dnsuserprofile_id_group_id_dcd10f3e_uniq` (`dnsuserprofile_id`,`group_id`),
   KEY `dnsuser_groups_group_id_66781b39_fk_auth_group_id` (`group_id`),
-  CONSTRAINT `dnsuser_groups_group_id_66781b39_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`),
-  CONSTRAINT `dnsuser_groups_dnsuserprofile_id_5963748d_fk_dnsuser_id` FOREIGN KEY (`dnsuserprofile_id`) REFERENCES `dnsuser` (`id`)
+  CONSTRAINT `dnsuser_groups_dnsuserprofile_id_5963748d_fk_dnsuser_id` FOREIGN KEY (`dnsuserprofile_id`) REFERENCES `dnsuser` (`id`),
+  CONSTRAINT `dnsuser_groups_group_id_66781b39_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -490,7 +491,7 @@ CREATE TABLE `dnsuser_groups` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `dnsuser_user_permissions`
+-- Table structure for dnsuser_user_permissions
 -- ----------------------------
 DROP TABLE IF EXISTS `dnsuser_user_permissions`;
 CREATE TABLE `dnsuser_user_permissions` (
@@ -500,8 +501,8 @@ CREATE TABLE `dnsuser_user_permissions` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `dnsuser_user_permissions_dnsuserprofile_id_permis_1866821c_uniq` (`dnsuserprofile_id`,`permission_id`),
   KEY `dnsuser_user_permiss_permission_id_f55f41cf_fk_auth_perm` (`permission_id`),
-  CONSTRAINT `dnsuser_user_permiss_permission_id_f55f41cf_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
-  CONSTRAINT `dnsuser_user_permiss_dnsuserprofile_id_759c2bf9_fk_dnsuser_i` FOREIGN KEY (`dnsuserprofile_id`) REFERENCES `dnsuser` (`id`)
+  CONSTRAINT `dnsuser_user_permiss_dnsuserprofile_id_759c2bf9_fk_dnsuser_i` FOREIGN KEY (`dnsuserprofile_id`) REFERENCES `dnsuser` (`id`),
+  CONSTRAINT `dnsuser_user_permiss_permission_id_f55f41cf_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -509,7 +510,7 @@ CREATE TABLE `dnsuser_user_permissions` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `heartbeat`
+-- Table structure for heartbeat
 -- ----------------------------
 DROP TABLE IF EXISTS `heartbeat`;
 CREATE TABLE `heartbeat` (
@@ -529,7 +530,7 @@ CREATE TABLE `heartbeat` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `host`
+-- Table structure for host
 -- ----------------------------
 DROP TABLE IF EXISTS `host`;
 CREATE TABLE `host` (
@@ -547,20 +548,19 @@ CREATE TABLE `host` (
   UNIQUE KEY `host_host_ip_id_domain_id_agentid_id_897fdf4c_uniq` (`host_ip_id`,`domain_id`,`agentid_id`),
   KEY `host_agentid_id_d4b1f897_fk_agent_agentid` (`agentid_id`),
   KEY `host_domain_id_e8a707ec_fk_second_domain_domain` (`domain_id`),
-  CONSTRAINT `host_host_ip_id_5ea7265e_fk_ipinfo_ipaddress` FOREIGN KEY (`host_ip_id`) REFERENCES `ipinfo` (`ipaddress`),
   CONSTRAINT `host_agentid_id_d4b1f897_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
-  CONSTRAINT `host_domain_id_e8a707ec_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`)
+  CONSTRAINT `host_domain_id_e8a707ec_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`),
+  CONSTRAINT `host_host_ip_id_5ea7265e_fk_ipinfo_ipaddress` FOREIGN KEY (`host_ip_id`) REFERENCES `ipinfo` (`ipaddress`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of host
 -- ----------------------------
-INSERT INTO `host` VALUES ('1', '600', '', '2017-11-25 10:59:10', '2017-11-25 10:59:10', 'admin', 'admin', 'CN-BJ171125', 'chuyiwei.com', '11000000101010000000001000001100');
 INSERT INTO `host` VALUES ('2', '600', '', '2017-11-25 10:59:36', '2017-11-25 10:59:36', 'admin', 'admin', 'HK171125', 'haojob.cn', '11010011000101001111011000011110');
 INSERT INTO `host` VALUES ('3', '600', '', '2017-11-25 10:59:58', '2017-11-25 10:59:58', 'admin', 'admin', 'USA171125', 'hulian.top', '11001010000100000010001001110000');
 
 -- ----------------------------
--- Table structure for `ipinfo`
+-- Table structure for ipinfo
 -- ----------------------------
 DROP TABLE IF EXISTS `ipinfo`;
 CREATE TABLE `ipinfo` (
@@ -578,7 +578,7 @@ CREATE TABLE `ipinfo` (
   UNIQUE KEY `reverse_ip` (`reverse_ip`),
   KEY `ipinfo_agentid_id_d4437af5_fk_agent_agentid` (`agentid_id`),
   CONSTRAINT `ipinfo_agentid_id_d4437af5_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of ipinfo
@@ -586,11 +586,9 @@ CREATE TABLE `ipinfo` (
 INSERT INTO `ipinfo` VALUES ('1', '11010011000010110000111010101011', '171.14.11.211.in-addr.arpa.', '', '2017-11-25 10:55:18', '2017-11-25 10:55:18', 'admin', 'admin', 'HK171125');
 INSERT INTO `ipinfo` VALUES ('2', '11001010000100000010001001110000', '112.34.16.202.in-addr.arpa.', '', '2017-11-25 10:55:33', '2017-11-25 10:55:33', 'admin', 'admin', 'USA171125');
 INSERT INTO `ipinfo` VALUES ('4', '11010011000101001111011000011110', '30.246.20.211.in-addr.arpa.', '', '2017-11-25 10:56:13', '2017-11-25 10:56:13', 'admin', 'admin', 'HK171125');
-INSERT INTO `ipinfo` VALUES ('5', '11000000101010000000001000001100', '12.2.168.192.in-addr.arpa.', '', '2017-11-25 10:56:26', '2017-11-25 10:56:26', 'admin', 'admin', 'CN-BJ171125');
-INSERT INTO `ipinfo` VALUES ('6', '11000000101010000000001000010001', '17.2.168.192.in-addr.arpa.', '', '2017-11-25 10:56:41', '2017-11-25 10:56:41', 'admin', 'admin', 'CN-BJ171125');
 
 -- ----------------------------
--- Table structure for `local`
+-- Table structure for local
 -- ----------------------------
 DROP TABLE IF EXISTS `local`;
 CREATE TABLE `local` (
@@ -605,18 +603,17 @@ CREATE TABLE `local` (
   PRIMARY KEY (`id`),
   KEY `local_agentid_id_7e3a54af_fk_agent_agentid` (`agentid_id`),
   KEY `local_domain_id_91a32995_fk_second_domain_domain` (`domain_id`),
-  CONSTRAINT `local_domain_id_91a32995_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`),
-  CONSTRAINT `local_agentid_id_7e3a54af_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
+  CONSTRAINT `local_agentid_id_7e3a54af_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
+  CONSTRAINT `local_domain_id_91a32995_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of local
 -- ----------------------------
-INSERT INTO `local` VALUES ('1', '', '2017-11-25 11:25:31', '2017-11-25 11:25:31', 'admin', 'admin', 'CN-BJ171125', 'tiejiang.org');
 INSERT INTO `local` VALUES ('2', '', '2017-11-25 11:25:37', '2017-11-25 11:25:37', 'admin', 'admin', 'HK171125', 'chuyiwei.com');
 
 -- ----------------------------
--- Table structure for `loginfo`
+-- Table structure for loginfo
 -- ----------------------------
 DROP TABLE IF EXISTS `loginfo`;
 CREATE TABLE `loginfo` (
@@ -635,7 +632,7 @@ CREATE TABLE `loginfo` (
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for `mx`
+-- Table structure for mx
 -- ----------------------------
 DROP TABLE IF EXISTS `mx`;
 CREATE TABLE `mx` (
@@ -653,18 +650,17 @@ CREATE TABLE `mx` (
   UNIQUE KEY `mx_mxDomain_domain_id_agentid_id_0cab3c55_uniq` (`mxDomain`,`domain_id`,`agentid_id`),
   KEY `mx_agentid_id_3ee5d272_fk_agent_agentid` (`agentid_id`),
   KEY `mx_domain_id_d89aba58_fk_second_domain_domain` (`domain_id`),
-  CONSTRAINT `mx_domain_id_d89aba58_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`),
-  CONSTRAINT `mx_agentid_id_3ee5d272_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+  CONSTRAINT `mx_agentid_id_3ee5d272_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
+  CONSTRAINT `mx_domain_id_d89aba58_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of mx
 -- ----------------------------
 INSERT INTO `mx` VALUES ('1', 'mx.chuyiwei.com', '10', '2017-11-25 11:26:24', '2017-11-25 11:26:24', 'admin', 'admin', '', 'HK171125', 'chuyiwei.com');
-INSERT INTO `mx` VALUES ('2', 'mx.haojob.com', '10', '2017-11-25 11:26:43', '2017-11-25 11:26:43', 'admin', 'admin', '', 'CN-BJ171125', 'haojob.cn');
 
 -- ----------------------------
--- Table structure for `ptr`
+-- Table structure for ptr
 -- ----------------------------
 DROP TABLE IF EXISTS `ptr`;
 CREATE TABLE `ptr` (
@@ -681,9 +677,9 @@ CREATE TABLE `ptr` (
   UNIQUE KEY `ptr_domain_id_agentid_id_b50a0a0d_uniq` (`domain_id`,`agentid_id`),
   KEY `ptr_agentid_id_07c91bd3_fk_agent_agentid` (`agentid_id`),
   KEY `ptr_ptr_ip_id_2c1f8178_fk_ipinfo_reverse_ip` (`ptr_ip_id`),
-  CONSTRAINT `ptr_ptr_ip_id_2c1f8178_fk_ipinfo_reverse_ip` FOREIGN KEY (`ptr_ip_id`) REFERENCES `ipinfo` (`reverse_ip`),
   CONSTRAINT `ptr_agentid_id_07c91bd3_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
-  CONSTRAINT `ptr_domain_id_eefa67e0_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`)
+  CONSTRAINT `ptr_domain_id_eefa67e0_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`),
+  CONSTRAINT `ptr_ptr_ip_id_2c1f8178_fk_ipinfo_reverse_ip` FOREIGN KEY (`ptr_ip_id`) REFERENCES `ipinfo` (`reverse_ip`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -693,7 +689,7 @@ INSERT INTO `ptr` VALUES ('1', '2017-11-25 11:27:00', '2017-11-25 11:27:00', 'ad
 INSERT INTO `ptr` VALUES ('2', '2017-11-25 11:27:18', '2017-11-25 11:27:18', 'admin', 'admin', '', 'HK171125', 'chuyiwei.com', '30.246.20.211.in-addr.arpa.');
 
 -- ----------------------------
--- Table structure for `resolv`
+-- Table structure for resolv
 -- ----------------------------
 DROP TABLE IF EXISTS `resolv`;
 CREATE TABLE `resolv` (
@@ -708,8 +704,8 @@ CREATE TABLE `resolv` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `resolv_resolv_ip_id_agentid_id_ff442aca_uniq` (`resolv_ip_id`,`agentid_id`),
   KEY `resolv_agentid_id_ae11ba4c_fk_agent_agentid` (`agentid_id`),
-  CONSTRAINT `resolv_resolv_ip_id_40b6dd34_fk_ipinfo_ipaddress` FOREIGN KEY (`resolv_ip_id`) REFERENCES `ipinfo` (`ipaddress`),
-  CONSTRAINT `resolv_agentid_id_ae11ba4c_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
+  CONSTRAINT `resolv_agentid_id_ae11ba4c_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
+  CONSTRAINT `resolv_resolv_ip_id_40b6dd34_fk_ipinfo_ipaddress` FOREIGN KEY (`resolv_ip_id`) REFERENCES `ipinfo` (`ipaddress`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -719,7 +715,7 @@ INSERT INTO `resolv` VALUES ('1', '', '2017-11-25 11:27:40', '2017-11-25 11:27:4
 INSERT INTO `resolv` VALUES ('2', '', '2017-11-25 11:27:52', '2017-11-25 11:27:52', 'admin', 'admin', 'USA171125', '11001010000100000010001001110000');
 
 -- ----------------------------
--- Table structure for `second_domain`
+-- Table structure for second_domain
 -- ----------------------------
 DROP TABLE IF EXISTS `second_domain`;
 CREATE TABLE `second_domain` (
@@ -743,7 +739,7 @@ INSERT INTO `second_domain` VALUES ('3', 'haojob.cn', '2017-11-25 10:50:03', '20
 INSERT INTO `second_domain` VALUES ('4', 'hulian.top', '2017-11-25 10:50:38', '2017-11-25 10:50:38', 'admin', 'admin', '');
 
 -- ----------------------------
--- Table structure for `server`
+-- Table structure for server
 -- ----------------------------
 DROP TABLE IF EXISTS `server`;
 CREATE TABLE `server` (
@@ -763,21 +759,19 @@ CREATE TABLE `server` (
   KEY `server_agentid_id_50c8e320_fk_agent_agentid` (`agentid_id`),
   KEY `server_domain_id_43f2d1b2_fk_second_domain_domain` (`domain_id`),
   KEY `server_nameserver_ip_id_812ede81_fk_ipinfo_ipaddress` (`nameserver_ip_id`),
-  CONSTRAINT `server_nameserver_ip_id_812ede81_fk_ipinfo_ipaddress` FOREIGN KEY (`nameserver_ip_id`) REFERENCES `ipinfo` (`ipaddress`),
   CONSTRAINT `server_agentid_id_50c8e320_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
   CONSTRAINT `server_domain_id_43f2d1b2_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`),
-  CONSTRAINT `server_namereverse_ip_id_664cc3ae_fk_ipinfo_reverse_ip` FOREIGN KEY (`namereverse_ip_id`) REFERENCES `ipinfo` (`reverse_ip`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+  CONSTRAINT `server_namereverse_ip_id_664cc3ae_fk_ipinfo_reverse_ip` FOREIGN KEY (`namereverse_ip_id`) REFERENCES `ipinfo` (`reverse_ip`),
+  CONSTRAINT `server_nameserver_ip_id_812ede81_fk_ipinfo_ipaddress` FOREIGN KEY (`nameserver_ip_id`) REFERENCES `ipinfo` (`ipaddress`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of server
 -- ----------------------------
-INSERT INTO `server` VALUES ('1', '53', '', '2017-11-25 11:28:20', '2017-11-25 11:28:20', 'admin', 'admin', 'HK171125', null, '171.14.11.211.in-addr.arpa.', '11001010000100000010001001110000');
 INSERT INTO `server` VALUES ('2', '53', '', '2017-11-25 11:28:38', '2017-11-25 11:28:38', 'admin', 'admin', 'HK171125', 'chuyiwei.com', null, '11010011000101001111011000011110');
-INSERT INTO `server` VALUES ('3', '53', '', '2017-11-25 11:28:53', '2017-11-25 11:28:53', 'admin', 'admin', 'CN-BJ171125', 'chuyiwei.com', null, '11000000101010000000001000001100');
 
 -- ----------------------------
--- Table structure for `srv`
+-- Table structure for srv
 -- ----------------------------
 DROP TABLE IF EXISTS `srv`;
 CREATE TABLE `srv` (
@@ -797,8 +791,8 @@ CREATE TABLE `srv` (
   UNIQUE KEY `srv_srv_domain_agentid_id_6c92d3db_uniq` (`srv_domain`,`agentid_id`),
   KEY `srv_agentid_id_80ee68ba_fk_agent_agentid` (`agentid_id`),
   KEY `srv_domain_id_6b36e952_fk_second_domain_domain` (`domain_id`),
-  CONSTRAINT `srv_domain_id_6b36e952_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`),
-  CONSTRAINT `srv_agentid_id_80ee68ba_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
+  CONSTRAINT `srv_agentid_id_80ee68ba_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
+  CONSTRAINT `srv_domain_id_6b36e952_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -807,7 +801,7 @@ CREATE TABLE `srv` (
 INSERT INTO `srv` VALUES ('1', 'www.chuyiwei.com', '0', '10', '10', '2017-11-25 11:34:48', '2017-11-25 11:34:48', 'admin', 'admin', '', 'HK171125', 'chuyiwei.com');
 
 -- ----------------------------
--- Table structure for `topdomain`
+-- Table structure for topdomain
 -- ----------------------------
 DROP TABLE IF EXISTS `topdomain`;
 CREATE TABLE `topdomain` (
@@ -832,7 +826,7 @@ INSERT INTO `topdomain` VALUES ('4', '.org', '2017-11-25 10:49:15', '2017-11-25 
 INSERT INTO `topdomain` VALUES ('5', '.top', '2017-11-25 10:49:18', '2017-11-25 10:49:18', 'admin', 'admin', '');
 
 -- ----------------------------
--- Table structure for `txt`
+-- Table structure for txt
 -- ----------------------------
 DROP TABLE IF EXISTS `txt`;
 CREATE TABLE `txt` (
@@ -848,8 +842,8 @@ CREATE TABLE `txt` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `txt_domain_id_agentid_id_b7f66082_uniq` (`domain_id`,`agentid_id`),
   KEY `txt_agentid_id_727d5d1b_fk_agent_agentid` (`agentid_id`),
-  CONSTRAINT `txt_domain_id_3368babb_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`),
-  CONSTRAINT `txt_agentid_id_727d5d1b_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`)
+  CONSTRAINT `txt_agentid_id_727d5d1b_fk_agent_agentid` FOREIGN KEY (`agentid_id`) REFERENCES `agent` (`agentid`),
+  CONSTRAINT `txt_domain_id_3368babb_fk_second_domain_domain` FOREIGN KEY (`domain_id`) REFERENCES `second_domain` (`domain`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
@@ -857,3 +851,4 @@ CREATE TABLE `txt` (
 -- ----------------------------
 INSERT INTO `txt` VALUES ('1', 'v=spf1 include:aspmx.googlail. ~all', '2017-11-25 13:22:11', '2017-11-25 13:22:11', 'admin', 'admin', '', 'HK171125', 'chuyiwei.com');
 INSERT INTO `txt` VALUES ('2', 'contact: jvnhvg@ml.tc', '2017-11-25 13:22:28', '2017-11-25 13:22:28', 'admin', 'admin', '', 'USA171125', 'haojob.cn');
+SET FOREIGN_KEY_CHECKS=1;

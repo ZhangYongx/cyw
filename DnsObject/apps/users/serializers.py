@@ -45,7 +45,7 @@ class UserDetailSerializer(serializers.ModelSerializer):
 
 class UserPersonalSerializer(serializers.ModelSerializer):
     """
-           用户基本信息serializers
+        用户基本信息serializers
     """
     update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     mobile = serializers.CharField(required=True, max_length=11, label="电话", help_text="请输入手机号")

@@ -12,10 +12,11 @@ from rest_framework.authentication import SessionAuthentication
 from utils.permissions import IsOwnerOrReadOnly
 from IPy import IP
 from rest_framework import status
+from rest_framework_jwt.serializers import jwt_encode_handler, jwt_payload_handler
 
 
-class AgentViewSet(mixins.CreateModelMixin,mixins.ListModelMixin, mixins.UpdateModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
-    permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
+class AgentViewSet(viewsets.ModelViewSet):
+    # permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
 
     serializer_class = AgentSerializer
@@ -30,6 +31,13 @@ class AgentViewSet(mixins.CreateModelMixin,mixins.ListModelMixin, mixins.UpdateM
             serializer.validated_data['update_user'] = self.request.user.username
             serializer.validated_data['agt_ip'] = IP(serializer.validated_data['agt_ip']).strBin()
             self.perform_create(serializer)
+            # user= self.perform_create(serializer)
+            # re_dict = serializer.data
+            # payload = jwt_payload_handler(user)
+            # re_dict["token"] = jwt_encode_handler(payload)
+            # re_dict["name"] = user.agentid
+            # headers = self.get_success_headers(serializer.data)
+            # return Response(re_dict, status=status.HTTP_201_CREATED, headers=headers)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

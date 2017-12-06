@@ -12,4 +12,3 @@ class HeartbeatSerializer(serializers.ModelSerializer):
         fields = (
             '__all__'
         )
-        extra_kwargs = {'agent_ip': {'write_only': True}}
