@@ -15,5 +15,14 @@ class AddressSerializer(AllSerializer):
 
     class Meta:
         model = Address
-        fields = '__all__'
-        extra_kwargs = {'addr_ip': {'write_only': True}}
+        fields = ('addr_ip',
+                  'ip',
+                  'domain',
+                  'create_time',
+                  'update_time',
+                  'create_user',
+                  'update_user',
+                  'agt_id',
+                  'remarks',
+                  )
+        # extra_kwargs = {'addr_ip': {'write_only': True}}

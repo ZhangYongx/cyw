@@ -13,8 +13,10 @@ class Server(models.Model):
     Server Table
     """
     domain = models.ForeignKey(SecondDomain, to_field='domain', verbose_name="域名")
-    reverse_ip = models.ForeignKey(IPinfo, to_field='reverse_ip', blank=True, null=True, verbose_name="反向IP")
-    nameserver_ip = models.GenericIPAddressField(verbose_name="NS IP", help_text="请输入域名服务器的")
+    nsreverse_ip = models.ForeignKey(IPinfo, related_name='ininfo_reverse_ip', to_field='reverse_ip',
+                                   blank=True, null=True, verbose_name="反向IP")
+    nameserver_ip = models.ForeignKey(IPinfo, related_name='ipinfo_ip', to_field='ipaddress',
+                                      verbose_name="NS IP", help_text="请输入域名服务器的")
     nameserver_port = models.IntegerField(default=53, verbose_name="NS PORT", help_text="请输入域名服务器的端口")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
