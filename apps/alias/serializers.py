@@ -10,6 +10,8 @@ class AliasSerializer(AllSerializer):
     """
     序列化 Models.Alias
     """
+    ip_choice = serializers.ChoiceField(choices=((0, '单个IP'), (1, 'IP地址段'),), default=0)
+
     def validate(self, data):
         """
         检验 old_ip 与 start_ip、end_ip，判断三者是否同时存在

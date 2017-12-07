@@ -17,7 +17,7 @@ class SecondDomain(models.Model):
     create_user = models.CharField(max_length=30, editable=False, verbose_name="创建用户")
     update_user = models.CharField(max_length=30, editable=False, verbose_name="更新用户")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
-    agt_id = models.ForeignKey(Agent, to_field='agt_id', verbose_name="Agent 编号")
+    # agt_id = models.ForeignKey(Agent, to_field='agt_id', verbose_name="Agent 编号")
 
     class Meta:
         db_table = "second_domain"

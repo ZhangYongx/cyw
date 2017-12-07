@@ -13,7 +13,7 @@ class Area(models.Model):
     Area Table
     """
     name = models.CharField(max_length=45, unique=True, verbose_name="区域名", help_text="区域名")
-    machine_room = models.CharField(max_length=45, unique=True, blank=False, null=False, verbose_name="机房名")
+    machine_room = models.CharField(max_length=45, blank=False, null=False, verbose_name="机房名")
     responsible = models.ForeignKey(DNSUser, to_field='username', verbose_name="负责人")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")

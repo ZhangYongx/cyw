@@ -14,7 +14,6 @@ class Agent(models.Model):
         (0, "running"),
         (1, "down"),
         (2, "pause"),
-        (3, "unknown"),
     )
     agt_ip = models.GenericIPAddressField(unique=True, verbose_name="代理IP")
     agt_id = models.CharField(max_length=30, unique=True, verbose_name="Agent编号")

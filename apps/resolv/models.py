@@ -12,7 +12,6 @@ class Resolv(models.Model):
     Resolv table
     """
     resolv_ip = models.GenericIPAddressField(verbose_name="IP")
-    resolv_port = models.IntegerField(blank=True, null=True, verbose_name="端口")
     remarks = models.CharField(max_length=45, blank=True, null=True, verbose_name="备注")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")

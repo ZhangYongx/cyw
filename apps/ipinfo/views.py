@@ -23,14 +23,13 @@ class IPinfoViewset(viewsets.ModelViewSet):
         生成创建人信息
         """
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid():
-            serializer.validated_data['create_user'] = resol.user.username
-            serializer.validated_data['update_user'] = self.request.user.username
-            serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['ipaddress']).reverseNames()[0]
-            serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
-            self.perform_create(serializer)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['create_user'] = self.request.user.username
+        serializer.validated_data['update_user'] = self.request.user.username
+        serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['ipaddress']).reverseNames()[0]
+        serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
+        self.perform_create(serializer)
+        return Response(serializer.data)
 
     def update(self, request, *args, **kwargs):
         """
@@ -39,13 +38,12 @@ class IPinfoViewset(viewsets.ModelViewSet):
         partial = kwargs.pop('partial', False)
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
-        if serializer.is_valid():
-            serializer.validated_data['update_user'] = self.request.user.username
-            serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['ipaddress']).reverseNames()[0]
-            serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
-            self.perform_update(serializer)
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer.is_valid(raise_exception=True)
+        serializer.validated_data['update_user'] = self.request.user.username
+        serializer.validated_data['reverse_ip'] = IP(serializer.validated_data['ipaddress']).reverseNames()[0]
+        serializer.validated_data['ipaddress'] = IP(serializer.validated_data['ipaddress']).strBin()
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
         """

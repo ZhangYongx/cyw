@@ -11,6 +11,5 @@ class DNSUserSerializer(AllSerializer):
     class Meta:
         model = DNSUser
         fields = '__all__'
-        read_only_fields = ('username',)
 
 

@@ -26,7 +26,7 @@ class ResolvViewset(viewsets.ModelViewSet):
         serializer.validated_data['update_user'] = self.request.user.username
         serializer.validated_data['resolv_ip'] = IP(serializer.validated_data['resolv_ip']).strBin()
         self.perform_create(serializer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.data)
 
     def retrieve(self, request, *args, **kwargs):
         """

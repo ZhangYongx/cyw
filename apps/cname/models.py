@@ -27,7 +27,7 @@ class Cname(models.Model):
         db_table = 'cname'
         verbose_name = '别名'
         verbose_name_plural = verbose_name
-        unique_together = ('cname', 'agt_id')
+        unique_together = ('cname', 'agt_id', 'domain')
 
     def __str__(self):
         return self.cname

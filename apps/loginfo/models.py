@@ -12,12 +12,12 @@ class Loginfo(models.Model):
     """
     log_state = (
         (0, '正常'),
-        (1, '错误'),
-        (2, 'unknown'),
+        (1, '告警'),
+        (2, '错误'),
     )
-    time = models.IntegerField(unique=True, verbose_name="时间戳")
+    time = models.IntegerField(verbose_name="时间戳")
     state = models.IntegerField(choices=log_state, default=0, verbose_name="状态")
-    agt_ip = models.ForeignKey(Agent, to_field='agt_ip', verbose_name="Agent编号")
+    agt_id = models.ForeignKey(Agent, to_field='agt_id', verbose_name="Agent编号")
     message = models.CharField(max_length=10, blank=True, null=True, verbose_name="信息保留")
 
     class Meta:
