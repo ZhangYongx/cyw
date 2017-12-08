@@ -20,12 +20,11 @@ class ServerViewset(viewsets.ModelViewSet):
     queryset = Server.objects.all()
     serializer_class = ServerSerializer
 
-
     def get_serializer_class(self):
-        if self.action =="create":
-            if self.request.query_params.get('server_method') =='1':
+        if self.action == "create":
+            if self.request.query_params.get('server_method') == '1':
                 return ServerSerializer1
-            elif self.request.query_params.get('server_method')=='2':
+            elif self.request.query_params.get('server_method') == '2':
                 return ServerSerializer2
             return ServerSerializer1
         return ServerSerializer
@@ -35,12 +34,12 @@ class ServerViewset(viewsets.ModelViewSet):
             添加信息，创建者和修改者默认为当前用户
          """
         serializer = self.get_serializer(data=request.data)
-        if serializer.is_valid() and self.request.query_params.get ('server_method') =='1':
+        if serializer.is_valid() and self.request.query_params.get('server_method') =='1':
             serializer.validated_data['create_user'] = self.request.user.username
             serializer.validated_data['update_user'] = self.request.user.username
             self.perform_create(serializer)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        elif serializer.is_valid() and self.request.query_params.get ('server_method') =='2':
+        elif serializer.is_valid() and self.request.query_params.get('server_method') =='2':
             serializer.validated_data['create_user'] = self.request.user.username
             serializer.validated_data['update_user'] = self.request.user.username
             self.perform_create(serializer)

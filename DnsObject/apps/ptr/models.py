@@ -5,8 +5,8 @@ from django.db import models
 from seconddomain.models import SecondDomain
 from ipinfo.models import IPinfo
 from agent.models import Agent
-from PublicMethod.ipreplace import IpReplace
-from IPy import IP
+
+
 class Ptr(models.Model):
     """
     PTR table

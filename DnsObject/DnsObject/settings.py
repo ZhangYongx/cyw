@@ -66,6 +66,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 CORS_ORIGIN_ALLOW_ALL = True
 ROOT_URLCONF = 'DnsObject.urls'
 
@@ -73,7 +74,7 @@ AUTHENTICATION_BACKENDS = (
     'users.views.CustomBackend',
 )
 
-#模板文件
+# 模板文件
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -94,20 +95,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'DnsObject.wsgi.application'
 
 
-#数据库配置
+# 数据库配置
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'dnsdb',
         'USER': 'root',
-        'PASSWORD': 'root',
+        'PASSWORD': '123456',
         'HOST': 'localhost',
         'PORT': '3306',
         'OPTIONS': {'init_command': 'SET storage_engine=INNODB;'}
     }
 }
 
-#validators密码认证
+# validators密码认证
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -123,8 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-#时区、语言设置
-LANGUAGE_CODE = 'zh-hans'  #中文支持，django1.8以后支持；1.8以前是zh-cn
+# 时区、语言设置
+LANGUAGE_CODE = 'zh-hans'
 
 TIME_ZONE = 'Asia/Shanghai'
 
@@ -132,9 +133,10 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = False  #默认是Ture，时间是utc时间，由于我们要用本地时间，所以手动修改为false！
+# 设置为本地时间
+USE_TZ = False
 
-#引入REST_FRAMEWORK
+# 引入REST_FRAMEWORK
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.IsAuthenticated',
@@ -149,14 +151,14 @@ REST_FRAMEWORK = {
 
 # REST_FRAMEWORK_TOKEN_EXPIRE_MINUTES = 60
 
-#JWT认证，token过期时间
+# JWT认证，token过期时间
 import datetime
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
 }
 
-#手机号码正则表达式
+# 手机号码正则表达式
 REGEX_MOBILE = "^1[358]\d{9}$|^147\d{8}$|^176\d{8}$"
 
 STATIC_URL = '/static/'

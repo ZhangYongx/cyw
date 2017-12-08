@@ -11,16 +11,17 @@ class Area(models.Model):
     """
     agentid = models.ForeignKey(Agent, to_field='agentid', verbose_name="Agent编号")
     areaname = models.CharField(max_length=45, verbose_name="区域")
-    machine_room = models.CharField(max_length=45, verbose_name="机房名")
+    machine_room = models.CharField(max_length=45, blank=False, null=False, verbose_name="机房名")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
-    create_user = models.CharField(max_length=45,  verbose_name="创建者")
-    update_user = models.CharField(max_length=45, verbose_name="修改者")
+    create_user = models.CharField(max_length=45, editable=False, verbose_name="创建者")
+    update_user = models.CharField(max_length=45, editable=False, verbose_name="修改者")
     remarks = models.CharField(max_length=45, null=True, blank=True, verbose_name="备注")
-    responsible_name = models.ForeignKey(DnsUserProfile, models.DO_NOTHING, verbose_name="负责人",  db_column='responsible_name')
+    responsible_name = models.ForeignKey(DnsUserProfile, models.DO_NOTHING,
+                                         verbose_name="负责人", db_column='responsible_name')
 
     class Meta:
-        unique_together=('agentid','areaname',)
+        unique_together = ('agentid', 'areaname',)
         verbose_name = '区域'
         verbose_name_plural = verbose_name
         managed = True

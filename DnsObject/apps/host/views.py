@@ -4,14 +4,13 @@ from rest_framework import viewsets
 from .models import Host
 from .serializers import HostSerializer
 from rest_framework.response import Response
-from IPy import IP
-from PublicMethod.ipreplace import IpReplace
 from rest_framework import mixins
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 from utils.permissions import IsOwnerOrReadOnly
 from rest_framework import status
+
 
 class HostViewset(mixins.CreateModelMixin, mixins.DestroyModelMixin, mixins.ListModelMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
     """

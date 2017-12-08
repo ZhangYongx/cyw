@@ -1,18 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from rest_framework import viewsets
-from rest_framework import mixins
 from agent.models import Agent
 from PublicMethod.ipreplace import IpReplace
 from rest_framework.response import Response
 from agent.serializers import AgentSerializer
-from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
-from utils.permissions import IsOwnerOrReadOnly
 from IPy import IP
 from rest_framework import status
-from rest_framework_jwt.serializers import jwt_encode_handler, jwt_payload_handler
 
 
 class AgentViewSet(viewsets.ModelViewSet):

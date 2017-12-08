@@ -21,7 +21,6 @@ class SrvViewset(viewsets.ModelViewSet):
     queryset = Srv.objects.all()
     serializer_class = SrvSerializer
 
-
     def create(self, request, *args, **kwargs):
         """
             添加信息，创建者和修改者默认为当前用户

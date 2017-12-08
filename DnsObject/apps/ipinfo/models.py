@@ -4,6 +4,7 @@ from agent.models import Agent
 from django.db import models
 from PublicMethod.ipreplace import IpReplace
 
+
 class IPinfo(models.Model):
     """
     ip table

@@ -25,9 +25,9 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_jwt.views import obtain_jwt_token
 from agent.views import AgentViewSet
 from rest_framework_jwt.views import refresh_jwt_token
-#from .views import obtain_expiring_auth_token
+# from .views import obtain_expiring_auth_token
 
-#注册路由
+# 注册路由
 router = DefaultRouter()
 router.register(r'address', AddressViewsSet, base_name='address')
 router.register(r'area', AreaViewsSet, base_name='area')
@@ -53,28 +53,28 @@ router.register(r'txt', TxtViewset, base_name='txt')
 
 urlpatterns = [
 
-    #url路由
+    # url路由
     url(r'^', include(router.urls)),
 
-    #drf登录接口
+    # drf登录接口
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    #django 自带后台
+    # django 自带后台
     url(r'^admin/', admin.site.urls),
 
-    #drf自带的token认证
+    # drf自带的token认证
     url(r'^api-token-auth/', views.obtain_auth_token),
 
-    #drf文档
+    # drf文档
     url(r'^docs/', include_docs_urls(title='DNS管理系统')),
 
-    #jwt的认证接口
+    # jwt的认证接口
     url(r'^api_token_register/', obtain_jwt_token),
 
-    #自定义获取Token
+    # 自定义获取Token
     # url(r'^api/token/', obtain_expiring_auth_token, name='api-token'),
 
-    #刷新jwt
+    # 刷新jwt
     url(r'^api-token-refresh/', refresh_jwt_token),
 
 ]

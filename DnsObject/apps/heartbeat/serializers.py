@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
-from rest_framework import serializers
 from heartbeat.models import Heartbeat
+from PublicMethod.allserializers import AllSerializer
 
 
-class HeartbeatSerializer(serializers.ModelSerializer):
+class HeartbeatSerializer(AllSerializer):
     """
-    序列化 Models.Heartbeat
+    序列化 Heartbeat
     """
     class Meta:
         model = Heartbeat

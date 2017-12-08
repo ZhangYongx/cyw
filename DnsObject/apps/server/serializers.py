@@ -1,29 +1,28 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
 from .models import Server
+from PublicMethod.allserializers import AllSerializer
 
 
-class ServerSerializer(serializers.ModelSerializer):
+class ServerSerializer(AllSerializer):
     """
         序列化 Models.Server
     """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
     ip = serializers.IPAddressField(source='nameserver_ip', read_only=True)
+
     class Meta:
         model = Server
         fields = (
             '__all__'
         )
-        read_only_fields = ('create_user', 'update_user',)
         extra_kwargs = {'nameserver_ip': {'write_only': True}}
 
-class ServerSerializer1(serializers.ModelSerializer):
+
+class ServerSerializer1(AllSerializer):
     """
-        序列化 Models.Server1
+        序列化 domain 字段, 当 server_method = 1 时，运行此方法。
     """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+
     class Meta:
         model = Server
         fields = (
@@ -38,15 +37,14 @@ class ServerSerializer1(serializers.ModelSerializer):
             'agentid'
 
         )
-        read_only_fields = ('create_user', 'update_user',)
         extra_kwargs = {'nameserver_ip': {'write_only': True}}
 
-class ServerSerializer2(serializers.ModelSerializer):
+
+class ServerSerializer2(AllSerializer):
     """
-        序列化 Models.Server2
+        序列化 namereverse_ip 字段, 当 server_method = 2 时，运行此方法。
     """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
+
     class Meta:
         model = Server
         fields = (
@@ -61,5 +59,4 @@ class ServerSerializer2(serializers.ModelSerializer):
             'agentid'
 
         )
-        read_only_fields = ('create_user', 'update_user',)
         extra_kwargs = {'nameserver_ip': {'write_only': True}}

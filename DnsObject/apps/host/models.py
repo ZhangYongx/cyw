@@ -4,7 +4,7 @@ from django.db import models
 from seconddomain.models import SecondDomain
 from ipinfo.models import IPinfo
 from agent.models import Agent
-from PublicMethod.ipreplace import IpReplace
+
 
 class Host(models.Model):
     """

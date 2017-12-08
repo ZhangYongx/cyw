@@ -1,20 +1,18 @@
 # -*- coding: utf-8 -*-
 from rest_framework import serializers
-
 from address import models
+from PublicMethod.allserializers import AllSerializer
 
 
-class AddressSerializer(serializers.ModelSerializer):
+class AddressSerializer(AllSerializer):
     """
     序列化 Models.Address
     """
-    create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
-    update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
     ip = serializers.IPAddressField(source='addr_ip', read_only=True)
+
     class Meta:
         model = models.Address
         fields = (
             '__all__'
         )
-        read_only_fields = ('create_user', 'update_user',)
         extra_kwargs = {'addr_ip': {'write_only': True}}

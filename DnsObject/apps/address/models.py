@@ -17,14 +17,15 @@ class Address(models.Model):
     addr_ip = models.ForeignKey(IPinfo, to_field='ipaddress', verbose_name="IP地址")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
     update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
-    create_user = models.CharField(max_length=45, verbose_name="创建者")
-    update_user = models.CharField(max_length=45, verbose_name="修改者")
+    create_user = models.CharField(max_length=45,  editable=False, verbose_name="创建者")
+    update_user = models.CharField(max_length=45,  editable=False, verbose_name="修改者")
     remarks = models.CharField(max_length=45, null=True, blank=True, verbose_name="备注")
     agentid = models.ForeignKey(Agent, to_field='agentid', verbose_name="Agent编号")
 
     class Meta:
         managed = True
         db_table = 'address'
-        unique_together=('domain','addr_ip','agentid',)
+        unique_together=('domain', 'addr_ip', 'agentid',)
+
     def __str__(self):
         return self.domain

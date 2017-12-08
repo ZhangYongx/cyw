@@ -20,7 +20,6 @@ class MxViewset(viewsets.ModelViewSet):
     queryset = Mx.objects.all()
     serializer_class = MxSerializer
 
-
     def create(self, request, *args, **kwargs):
         """
             添加信息，创建者和修改者默认为当前用户。IP转换为二进制存储

@@ -12,6 +12,7 @@ from rest_framework.authentication import SessionAuthentication
 from utils.permissions import IsOwnerOrReadOnly
 from rest_framework import status
 
+
 class AliasViewset(viewsets.ModelViewSet):
     """
     允许用户查看或编辑 Alias API

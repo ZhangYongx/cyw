@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from IPy import IP
 from rest_framework import viewsets
 from rest_framework.response import Response
-from PublicMethod.ipreplace import IpReplace
 from address import models
 from address import serializers
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
 from utils.permissions import IsOwnerOrReadOnly
 from rest_framework import status
+
 
 class AddressViewsSet(viewsets.ModelViewSet):
 

@@ -1,15 +1,12 @@
 # -*- coding: utf-8 -*-
-from rest_framework import serializers
 from .models import Loginfo
+from PublicMethod.allserializers import AllSerializer
 
 
-class LoginfoSerializer(serializers.ModelSerializer):
+class LoginfoSerializer(AllSerializer):
     """
     序列化 Models.Loginfo
     """
     class Meta:
         model = Loginfo
-        fields = (
-            '__all__'
-        )
-        extra_kwargs = {'agent_ip': {'write_only': True}}
+        fields = '__all__'

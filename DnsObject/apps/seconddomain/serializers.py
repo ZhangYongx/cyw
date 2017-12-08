@@ -1,20 +1,15 @@
 # -*- coding: utf-8 -*-
-from rest_framework import serializers
 from seconddomain.models import SecondDomain
+from PublicMethod.allserializers import AllSerializer
 
 
-class SecondDomainSerializer(serializers.ModelSerializer):
+class SecondDomainSerializer(AllSerializer):
     """
         Serializer Models.SecondDomain
      """
-    create_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
-    update_time = serializers.DateTimeField(read_only=True, format='%Y-%m-%d %H:%M:%S')
 
     class Meta:
         model = SecondDomain
-        fields = (
-            '__all__'
-        )
-        read_only_fields = ('create_user', 'update_user',)
+        fields = '__all__'
 
 

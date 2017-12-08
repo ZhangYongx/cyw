@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
-from rest_framework import serializers
 from ipinfo.models import IPinfo
+from PublicMethod.allserializers import AllSerializer
 
 
-class IPinfoSerializer(serializers.ModelSerializer):
+class IPinfoSerializer(AllSerializer):
     """
     Serializer Models.Ipinfo
     """
-    create_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
-    update_time = serializers.DateTimeField(format="%Y-%m-%d %H:%M:%S", read_only=True)
 
     class Meta:
         model = IPinfo
         fields = (
             '__all__'
         )
-        read_only_fields = ('create_user', 'update_user','reverse_ip',)
+        read_only_fields = ('reverse_ip',)

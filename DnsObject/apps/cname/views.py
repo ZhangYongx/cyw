@@ -10,6 +10,7 @@ from rest_framework.authentication import SessionAuthentication
 from utils.permissions import IsOwnerOrReadOnly
 from rest_framework import status
 
+
 class CnameViewSet(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, IsOwnerOrReadOnly)
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
@@ -42,10 +43,9 @@ class CnameViewSet(viewsets.ModelViewSet):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
     def get_queryset(self):
         """
-            根据agentid查询，获取相关数据
+            根据 agentid 查询，获取相关数据
         """
         queryset = models.Cname.objects.all()
         agentid = self.request.query_params.get('agentid', None)

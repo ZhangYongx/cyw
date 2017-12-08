@@ -7,14 +7,13 @@ from .serializers import LoginfoSerializer
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework.authentication import SessionAuthentication
-from utils.permissions import IsOwnerOrReadOnly
+
 
 class LoginfoViewset(viewsets.ModelViewSet):
     permission_classes = (IsAuthenticated, )
     authentication_classes = (JSONWebTokenAuthentication, SessionAuthentication)
     queryset = Loginfo.objects.all()
     serializer_class = LoginfoSerializer
-
 
     def get_queryset(self):
         """

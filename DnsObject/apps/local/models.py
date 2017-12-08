@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 from django.db import models
-from ipinfo.models import IPinfo
 from agent.models import Agent
 from seconddomain.models import SecondDomain
+
 
 class Local(models.Model):
     """
@@ -16,7 +16,6 @@ class Local(models.Model):
     create_user = models.CharField(max_length=30, editable=False, verbose_name="创建用户")
     update_user = models.CharField(max_length=30, editable=False, verbose_name="更新用户")
     agentid = models.ForeignKey(Agent, to_field='agentid', verbose_name="Agent编号")
-
 
     class Meta:
         managed = True
