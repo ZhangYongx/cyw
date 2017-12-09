@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth import authenticate
 
+
 def changepwd(request):
     if request.method == 'GET':
         form = ChangepwdForm()
@@ -20,6 +21,7 @@ def changepwd(request):
                 user.save()
                 return render_to_response('changepwd.html', RequestContext(request, {'changepwd_success': True}))
             else:
-                return render_to_response('changepwd.html', RequestContext(request, {'form': form, 'oldpassword_is_wrong': True}))
+                return render_to_response('changepwd.html',
+                                          RequestContext(request, {'form': form, 'oldpassword_is_wrong': True}))
         else:
             return render_to_response('changepwd.html', RequestContext(request, {'form': form, }))

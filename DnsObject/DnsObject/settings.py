@@ -21,7 +21,7 @@ SECRET_KEY = '9$w^(3(6!!p@077ol38s#x*!8%%@o8=kq0a4#*qp6a_(s5apan'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*',]
+ALLOWED_HOSTS = ['*', ]
 
 AUTH_USER_MODEL = 'users.DnsUserProfile'
 
@@ -153,6 +153,7 @@ REST_FRAMEWORK = {
 
 # JWT认证，token过期时间
 import datetime
+
 JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
     'JWT_AUTH_HEADER_PREFIX': 'JWT',
