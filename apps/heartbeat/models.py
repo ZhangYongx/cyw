@@ -17,6 +17,8 @@ class Heartbeat(models.Model):
         (2, '错误'),
     )
     time = models.IntegerField(unique=True, verbose_name="时间戳")
+    create_time = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+    update_time = models.DateTimeField(auto_now=True, verbose_name="更新时间")
     state = models.IntegerField(choices=heart_state, default=0, verbose_name="状态")
     agt_ip = models.ForeignKey(Agent, to_field='agt_ip', verbose_name="Agent IP")
     # agt_version = models.ForeignKey(Agent, to_field='agt_version', verbose_name="Agent 版本")

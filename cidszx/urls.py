@@ -16,6 +16,7 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework import routers
+from rest_framework.authtoken import views
 
 from address.views import AddressViewset
 from agent.views import AgentViewset
@@ -65,5 +66,6 @@ urlpatterns = [
     url(r'^dns/', include(router.urls)),
     # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'dns', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api-token-auth/', views.obtain_auth_token),
     url(r'^admin/', admin.site.urls),
 ]

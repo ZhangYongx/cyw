@@ -27,6 +27,7 @@ class Agent(models.Model):
 
     class Meta:
         db_table = 'agent'
+        unique_together = ('agt_ip', 'agt_version', 'agt_id')
 
     def __str__(self):
         return str(self.agt_id)

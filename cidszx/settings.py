@@ -37,7 +37,7 @@ SECRET_KEY = '_erdb9qji&b3sq^qrb4zbi(jfzp!@k#o(q!0fjwe9qdh_-t&6m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -49,7 +49,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'rest_framework',
+    'rest_framework.authtoken',
     'dnsuser.apps.DnsuserConfig',
     'agent.apps.AgentConfig',
     'area.apps.AreaConfig',
@@ -77,6 +79,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAdminUser',
     ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+    )
     # 'DEFAULT_PAGINATION_CLASS':[
     #     'rest_framework.pagination.PageNumberPagination',
     # ],
